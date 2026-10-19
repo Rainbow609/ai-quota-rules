@@ -1,0 +1,58 @@
+{
+  "id": "claude",
+  "name": "Claude Code（Pro / Max）",
+  "kind": "subscription",
+  "homepage": "https://claude.ai",
+  "sources": [
+    "https://support.claude.com/en/articles/11145838-using-claude-code-with-your-pro-or-max-plan",
+    "https://code.claude.com/docs/en/costs",
+    "https://www.anthropic.com/news/higher-limits-spacex（取消高峰降额的公告）"
+  ],
+  "confidence": "community",
+  "verified_at": "2026-10-19",
+  "tags": ["subscription", "oauth", "requires-web-login", "peak-deprecated"],
+  "notes": [
+    "窗口规则有官方文档，OAuth 用量接口未公开文档（社区长期使用）。",
+    "**需要 OAuth 登录**：token 需带 user:profile scope；桌面端凭据在 Keychain（Claude Code-credentials）或 ~/.claude/.credentials.json。",
+    "字段路径来自社区实现，接入前务必实测（可能存在 utilization / resets_at 之类的变体）。"
+  ],
+  "auth": { "type": "oauth", "header": "Authorization", "prefix": "Bearer ", "key_hint": "Claude Code OAuth access token" },
+  "regions": [
+    { "id": "default", "label": "默认", "base": "https://api.anthropic.com" }
+  ],
+  "queries": [
+    {
+      "id": "oauth_usage",
+      "label": "订阅额度窗口",
+      "method": "GET",
+      "region": "default",
+      "path": "/api/oauth/usage",
+      "extra_headers": { "anthropic-beta": "oauth-2025-04-20" },
+      "values": [
+        { "id": "five_hour", "label": "5 小时窗口", "from": "five_hour.utilization", "unit": "percent", "reset_from": "five_hour.resets_at" },
+        { "id": "seven_day", "label": "周窗口", "from": "seven_day.utilization", "unit": "percent", "reset_from": "seven_day.resets_at" },
+        { "id": "seven_day_sonnet", "label": "Sonnet 周窗口", "from": "seven_day_sonnet.utilization", "unit": "percent" },
+        { "id": "seven_day_opus", "label": "Opus 周窗口", "from": "seven_day_opus.utilization", "unit": "percent" }
+      ],
+      "note": "同一响应可能还带 limits[].weekly_scoped（模型级周窗）。客户端应容忍字段缺失。"
+    },
+    {
+      "id": "oauth_profile",
+      "label": "账号校验",
+      "method": "GET",
+      "region": "default",
+      "path": "/api/oauth/profile",
+      "values": [{ "id": "plan", "label": "套餐", "from": "organization.plan_type", "unit": "string" }],
+      "note": "用于校验 token 有效性，字段名以实测为准。"
+    }
+  ],
+  "peak": {
+    "has_peak": true,
+    "schedule_known": true,
+    "enabled": false,
+    "timezone": "America/Los_Angeles",
+    "windows": [{ "days": [1, 2, 3, 4, 5], "start": "05:00", "end": "11:00" }],
+    "applies_to": "plan_quota",
+    "note": "历史规则（2026-03-23 生效）：周一至周五 05:00-11:00 PT 为高峰，5 小时窗口消耗更快；官方已于 2026-05-06 取消高峰降额并翻倍 5 小时限额，故 enabled=false，保留供历史回放。"
+  }
+}

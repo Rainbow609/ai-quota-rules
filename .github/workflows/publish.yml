@@ -1,0 +1,82 @@
+name: publish-ruleset
+
+on:
+  push:
+    branches: [main]
+    paths: ["rules/**", "schema/**", "tools/**", "mirrors/**"]
+  schedule:
+    - cron: "17 2 * * *" # 每日兜底重建（节假日日历会随时间推进）
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 校验规则
+        run: python3 tools/validate.py
+
+      - name: 构建 dist
+        id: build
+        run: |
+          python3 tools/build.py
+          if [ -n "$(git status --porcelain dist)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "dist 无变化，跳过发布"
+          fi
+
+      - name: 提交 dist 变更
+        if: steps.build.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dist
+          git commit -m "chore: 重新生成 dist [skip ci]"
+          git push
+
+      - name: 打 tag 并发 Release
+        if: steps.build.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          V=$(python3 -c "import json;print(json.load(open('dist/manifest.json'))['version'])")
+          git tag "ruleset-$V"
+          git push origin "ruleset-$V"
+          gh release create "ruleset-$V" dist/ruleset.json dist/manifest.json mirrors/mirrors.json \
+            --title "ruleset $V" --notes "由 CI 自动发布（tag 引用可被 jsDelivr 永久缓存）"
+
+      # 可选：发布到 npm，使 npmmirror / jsDelivr(npm) / unpkg 三个免备案源可用。
+      # 未配置 secrets.NPM_TOKEN 时自动跳过。
+      - name: 发布到 npm（可选）
+        if: steps.build.outputs.changed == 'true'
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -z "$NPM_TOKEN" ]; then
+            echo "未配置 NPM_TOKEN，跳过 npm 发布（mirrors.json 中 npmmirror 源保持 disabled）"
+            exit 0
+          fi
+          # 2026.10.19.1 -> 0.20261019.1（合法 semver，且随日期单调递增）
+          NPMV=$(python3 -c "import json;y,m,d,n=json.load(open('dist/manifest.json'))['version'].split('.');print(f'0.{y}{m}{d}.{n}')")
+          mkdir -p /tmp/npm/pkg/dist /tmp/npm/pkg/mirrors
+          cp dist/ruleset.json dist/manifest.json /tmp/npm/pkg/dist/
+          cp mirrors/mirrors.json /tmp/npm/pkg/mirrors/
+          cd /tmp/npm/pkg
+          NPMV="$NPMV" python3 - <<'PY'
+          import json, os
+          json.dump({
+              "name": "ai-quota-rules",
+              "version": os.environ["NPMV"],
+              "description": "AI 订阅/API 额度查询规则集（endpoints、字段映射、高峰时段）",
+              "license": "MIT",
+              "repository": "https://github.com/Rainbow609/ai-quota-rules",
+          }, open("package.json", "w"), ensure_ascii=False, indent=2)
+          PY
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+          npm publish --access public

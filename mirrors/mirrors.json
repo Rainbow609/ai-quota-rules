@@ -1,0 +1,75 @@
+{
+  "schema_version": "1",
+  "updated_at": "2026-10-19",
+  "note": "客户端多源拉取清单。此文件本身也应可远程更新（客户端优先用内置副本，拉到新版本后替换）。路径占位符：{path} = dist/ 下的相对路径。",
+  "fetch_policy": {
+    "max_sources_per_refresh": 3,
+    "total_budget_seconds": 25,
+    "timeouts": { "connect": 3, "read": 8 },
+    "backoff_hours_on_failure": 12,
+    "reprobe_primary_every_hours": 168,
+    "validate_before_use": ["2xx 或 304", "正文首字符为 {", "字节数在 [1024, 524288]", "JSON.parse 成功", "sha256 与 manifest 一致"]
+  },
+  "sources": [
+    {
+      "id": "gitee-mirror",
+      "priority": 1,
+      "enabled": false,
+      "kind": "git-raw",
+      "url_template": "https://gitee.com/{gitee_owner}/ai-quota-rules/raw/main/{path}",
+      "cn_reachable": "likely",
+      "note": "需先在 Gitee 建镜像仓库并把 gitee_owner 换成实际用户名后启用。免备案、大陆直连稳；同步需手动或用 Gitee 的『同步更新』按钮；社区有过镜像仓库被下架的先例，不要作唯一源。"
+    },
+    {
+      "id": "npmmirror",
+      "priority": 2,
+      "enabled": false,
+      "kind": "npm-files",
+      "url_template": "https://registry.npmmirror.com/ai-quota-rules/{npm_version}/files/{path}",
+      "cn_reachable": "likely",
+      "note": "需先 npm publish（CI 里已留可选步骤）。免备案、大陆直连稳；注意 files 路径不返回 ETag，只能用 URL 中的版本号寻址。npm_version 需每次发版同步更新（可用 manifest 里的 npm 字段下发）。"
+    },
+    {
+      "id": "jsdelivr",
+      "priority": 3,
+      "enabled": true,
+      "kind": "git-cdn",
+      "url_templates": [
+        "https://cdn.jsdelivr.net/gh/Rainbow609/ai-quota-rules@main/{path}",
+        "https://fastly.jsdelivr.net/gh/Rainbow609/ai-quota-rules@main/{path}",
+        "https://testingcf.jsdelivr.net/gh/Rainbow609/ai-quota-rules@main/{path}",
+        "https://gcore.jsdelivr.net/gh/Rainbow609/ai-quota-rules@main/{path}"
+      ],
+      "cn_reachable": "unstable",
+      "note": "四台主机轮换。分支引用缓存 12 小时（改用 tag 则为永久缓存，注意发布新 tag 才能刷新）。限流时会返回 HTTP 200 但正文是纯文本 429: Too Many Requests——必须按『正文不是合法 JSON』判为失败，否则会覆盖本地缓存。"
+    },
+    {
+      "id": "ghproxy",
+      "priority": 4,
+      "enabled": true,
+      "kind": "reverse-proxy",
+      "url_templates": [
+        "https://gh-proxy.com/https://raw.githubusercontent.com/Rainbow609/ai-quota-rules/main/{path}",
+        "https://ghfast.top/https://raw.githubusercontent.com/Rainbow609/ai-quota-rules/main/{path}",
+        "https://ghproxy.net/https://raw.githubusercontent.com/Rainbow609/ai-quota-rules/main/{path}"
+      ],
+      "cn_reachable": "unstable",
+      "note": "均为境外反代（法国/美国节点，部分挂 Cloudflare），延迟波动大，只作最后兜底。域名会失效（ghproxy.com、raw.gitmirror.com、hub.gitmirror.com 已不可用），故本清单必须可远程更新，不要硬编码进 App。"
+    },
+    {
+      "id": "github-raw",
+      "priority": 5,
+      "enabled": true,
+      "kind": "git-raw",
+      "url_template": "https://raw.githubusercontent.com/Rainbow609/ai-quota-rules/main/{path}",
+      "cn_reachable": "no",
+      "note": "中国大陆不可依赖；供海外用户与开发调试使用。"
+    }
+  ],
+  "planned": {
+    "self_hosted_cdn": {
+      "enabled": false,
+      "note": "备案域名 + 境内 CDN（腾讯云 CDN 大陆流量约 ¥0.21/GB 起）是唯一能保证大陆体验的通道。规则集是小文件高频拉取，务必依赖 ETag/If-None-Match 的 304 空响应，否则流量会被无效请求吃掉（10 万 DAU 日拉 3 次 ≈ 900 GB/月 ≈ ¥190/月）。备案注意：域名 ICP 备案与 App 备案是两套，互不通用。"
+    }
+  }
+}

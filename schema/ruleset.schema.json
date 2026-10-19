@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Rainbow609/ai-quota-rules/schema/ruleset.schema.json",
+  "title": "AI 额度查询规则集",
+  "type": "object",
+  "required": ["schema_version", "ruleset_version", "min_client_version", "providers"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "enum": ["1"] },
+    "ruleset_version": {
+      "type": "string",
+      "pattern": "^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}\\.[0-9]+$",
+      "description": "日期版本号，形如 2026.10.19.1，客户端按字符串单调递增比较，不要用时间戳"
+    },
+    "generated_at": { "type": "string" },
+    "min_client_version": { "type": "string" },
+    "holidays": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["days"],
+        "properties": {
+          "source": { "type": "string" },
+          "updated_at": { "type": "string" },
+          "days": { "type": "array", "items": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" } }
+        }
+      }
+    },
+    "providers": { "type": "array", "items": { "$ref": "#/$defs/provider" } }
+  },
+  "$defs": {
+    "provider": {
+      "type": "object",
+      "required": ["id", "name", "kind", "auth", "queries", "confidence"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "name": { "type": "string" },
+        "kind": { "type": "string", "enum": ["balance", "subscription"] },
+        "homepage": { "type": "string" },
+        "sources": { "type": "array", "items": { "type": "string" } },
+        "confidence": { "type": "string", "enum": ["official", "semi-official", "community"] },
+        "verified_at": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "array", "items": { "type": "string" } },
+        "auth": {
+          "type": "object",
+          "required": ["type"],
+          "additionalProperties": false,
+          "properties": {
+            "type": { "type": "string", "enum": ["bearer", "raw", "oauth", "cookie"] },
+            "header": { "type": "string" },
+            "prefix": { "type": "string" },
+            "key_hint": { "type": "string" },
+            "extra_headers": { "type": "object", "additionalProperties": { "type": "string" } }
+          }
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "base"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string" },
+              "label": { "type": "string" },
+              "base": { "type": "string", "pattern": "^https://" },
+              "note": { "type": "string" }
+            }
+          }
+        },
+        "queries": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/query" } },
+        "peak": { "$ref": "#/$defs/peak" }
+      }
+    },
+    "query": {
+      "type": "object",
+      "required": ["id", "method", "region", "path", "values"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "method": { "type": "string", "enum": ["GET", "POST"] },
+        "region": { "type": "string", "description": "对应 regions[].id；无 regions 时可写 default" },
+        "base_override": { "type": "string", "pattern": "^https://" },
+        "path": { "type": "string", "pattern": "^/" },
+        "legacy_paths": { "type": "array", "items": { "type": "string" } },
+        "extra_headers": { "type": "object", "additionalProperties": { "type": "string" } },
+        "note": { "type": "string" },
+        "values": { "type": "array", "items": { "$ref": "#/$defs/value" } }
+      }
+    },
+    "value": {
+      "type": "object",
+      "required": ["id", "label", "from", "unit"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "from": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*(\\[[0-9]+\\])?(\\.[A-Za-z_][A-Za-z0-9_]*(\\[[0-9]+\\])?)*$",
+          "description": "受限路径：点号分隔 + [n] 下标；不支持通配、表达式或函数"
+        },
+        "unit": { "type": "string", "enum": ["money", "percent", "count", "seconds", "string", "bool", "timestamp"] },
+        "currency_from": { "type": "string" },
+        "reset_from": { "type": "string" },
+        "status_from": { "type": "string" },
+        "scale": { "type": "number", "description": "数值换算系数，如 1/10000 记为 0.0001" },
+        "note": { "type": "string" }
+      }
+    },
+    "peak": {
+      "type": "object",
+      "required": ["has_peak", "schedule_known"],
+      "additionalProperties": false,
+      "properties": {
+        "has_peak": { "type": "boolean" },
+        "schedule_known": { "type": "boolean" },
+        "enabled": { "type": "boolean", "description": "规则已失效/被厂商取消时置 false，保留历史供回放" },
+        "timezone": { "type": "string" },
+        "windows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["days", "start", "end"],
+            "additionalProperties": false,
+            "properties": {
+              "days": { "type": "array", "items": { "type": "integer", "minimum": 1, "maximum": 7 } },
+              "start": { "type": "string", "pattern": "^[0-2][0-9]:[0-5][0-9]$" },
+              "end": { "type": "string", "pattern": "^[0-2][0-9]:[0-5][0-9]$" }
+            }
+          }
+        },
+        "holiday_calendar": { "type": "string", "description": "节假日日历 id，对应顶层 holidays 的键；节假日全天按平峰" },
+        "off_peak_discount": { "type": "number" },
+        "applies_to": { "type": "string", "enum": ["api_pricing", "plan_quota"] },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}

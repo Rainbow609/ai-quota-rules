@@ -1,0 +1,833 @@
+{
+  "schema_version": "1",
+  "ruleset_version": "2026.10.19.1",
+  "generated_at": "2026-10-19T07:06:00Z",
+  "min_client_version": "0.1.0",
+  "holidays": {
+    "cn": {
+      "source": "https://github.com/NateScarlet/holiday-cn",
+      "updated_at": "2026-10-19",
+      "days": [
+        "2026-01-01",
+        "2026-01-02",
+        "2026-01-03",
+        "2026-02-15",
+        "2026-02-16",
+        "2026-02-17",
+        "2026-02-18",
+        "2026-02-19",
+        "2026-02-20",
+        "2026-02-21",
+        "2026-02-22",
+        "2026-02-23",
+        "2026-04-04",
+        "2026-04-05",
+        "2026-04-06",
+        "2026-05-01",
+        "2026-05-02",
+        "2026-05-03",
+        "2026-05-04",
+        "2026-05-05",
+        "2026-06-19",
+        "2026-06-20",
+        "2026-06-21",
+        "2026-09-25",
+        "2026-09-26",
+        "2026-09-27",
+        "2026-10-01",
+        "2026-10-02",
+        "2026-10-03",
+        "2026-10-04",
+        "2026-10-05",
+        "2026-10-06",
+        "2026-10-07"
+      ]
+    }
+  },
+  "providers": [
+    {
+      "id": "claude",
+      "name": "Claude Code（Pro / Max）",
+      "kind": "subscription",
+      "homepage": "https://claude.ai",
+      "sources": [
+        "https://support.claude.com/en/articles/11145838-using-claude-code-with-your-pro-or-max-plan",
+        "https://code.claude.com/docs/en/costs",
+        "https://www.anthropic.com/news/higher-limits-spacex（取消高峰降额的公告）"
+      ],
+      "confidence": "community",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "subscription",
+        "oauth",
+        "requires-web-login",
+        "peak-deprecated"
+      ],
+      "notes": [
+        "窗口规则有官方文档，OAuth 用量接口未公开文档（社区长期使用）。",
+        "**需要 OAuth 登录**：token 需带 user:profile scope；桌面端凭据在 Keychain（Claude Code-credentials）或 ~/.claude/.credentials.json。",
+        "字段路径来自社区实现，接入前务必实测（可能存在 utilization / resets_at 之类的变体）。"
+      ],
+      "auth": {
+        "type": "oauth",
+        "header": "Authorization",
+        "prefix": "Bearer ",
+        "key_hint": "Claude Code OAuth access token"
+      },
+      "regions": [
+        {
+          "id": "default",
+          "label": "默认",
+          "base": "https://api.anthropic.com"
+        }
+      ],
+      "queries": [
+        {
+          "id": "oauth_usage",
+          "label": "订阅额度窗口",
+          "method": "GET",
+          "region": "default",
+          "path": "/api/oauth/usage",
+          "extra_headers": {
+            "anthropic-beta": "oauth-2025-04-20"
+          },
+          "values": [
+            {
+              "id": "five_hour",
+              "label": "5 小时窗口",
+              "from": "five_hour.utilization",
+              "unit": "percent",
+              "reset_from": "five_hour.resets_at"
+            },
+            {
+              "id": "seven_day",
+              "label": "周窗口",
+              "from": "seven_day.utilization",
+              "unit": "percent",
+              "reset_from": "seven_day.resets_at"
+            },
+            {
+              "id": "seven_day_sonnet",
+              "label": "Sonnet 周窗口",
+              "from": "seven_day_sonnet.utilization",
+              "unit": "percent"
+            },
+            {
+              "id": "seven_day_opus",
+              "label": "Opus 周窗口",
+              "from": "seven_day_opus.utilization",
+              "unit": "percent"
+            }
+          ],
+          "note": "同一响应可能还带 limits[].weekly_scoped（模型级周窗）。客户端应容忍字段缺失。"
+        },
+        {
+          "id": "oauth_profile",
+          "label": "账号校验",
+          "method": "GET",
+          "region": "default",
+          "path": "/api/oauth/profile",
+          "values": [
+            {
+              "id": "plan",
+              "label": "套餐",
+              "from": "organization.plan_type",
+              "unit": "string"
+            }
+          ],
+          "note": "用于校验 token 有效性，字段名以实测为准。"
+        }
+      ],
+      "peak": {
+        "has_peak": true,
+        "schedule_known": true,
+        "enabled": false,
+        "timezone": "America/Los_Angeles",
+        "windows": [
+          {
+            "days": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "start": "05:00",
+            "end": "11:00"
+          }
+        ],
+        "applies_to": "plan_quota",
+        "note": "历史规则（2026-03-23 生效）：周一至周五 05:00-11:00 PT 为高峰，5 小时窗口消耗更快；官方已于 2026-05-06 取消高峰降额并翻倍 5 小时限额，故 enabled=false，保留供历史回放。"
+      }
+    },
+    {
+      "id": "codex",
+      "name": "Codex / ChatGPT 订阅",
+      "kind": "subscription",
+      "homepage": "https://chatgpt.com",
+      "sources": [
+        "https://github.com/openai/codex（官方 CLI 源码引用 {base}/wham/usage）",
+        "https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan"
+      ],
+      "confidence": "community",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "subscription",
+        "oauth",
+        "requires-web-login"
+      ],
+      "notes": [
+        "接口未公开文档，字段结构由官方开源仓库 openai/codex 的 backend-client 源码印证。",
+        "**需要 OAuth 登录**：客户端必须自行完成 PKCE 授权流程（内嵌 Web 或外部浏览器回跳），请求需附加 chatgpt-account-id 头（取自 OAuth 会话）。",
+        "桌面端凭据位于 ~/.codex/auth.json，可作为调试参照。"
+      ],
+      "auth": {
+        "type": "oauth",
+        "header": "Authorization",
+        "prefix": "Bearer ",
+        "key_hint": "ChatGPT OAuth access token"
+      },
+      "regions": [
+        {
+          "id": "default",
+          "label": "默认",
+          "base": "https://chatgpt.com"
+        }
+      ],
+      "queries": [
+        {
+          "id": "wham_usage",
+          "label": "订阅额度窗口",
+          "method": "GET",
+          "region": "default",
+          "path": "/backend-api/wham/usage",
+          "values": [
+            {
+              "id": "plan",
+              "label": "套餐类型",
+              "from": "plan_type",
+              "unit": "string"
+            },
+            {
+              "id": "primary",
+              "label": "主窗口（通常 5 小时）已用",
+              "from": "rate_limit.primary_window.used_percent",
+              "unit": "percent",
+              "reset_from": "rate_limit.primary_window.resets_at",
+              "note": "配套字段 limit_window_seconds / reset_after_seconds 用于判读窗口长度"
+            },
+            {
+              "id": "secondary",
+              "label": "次窗口（通常周）已用",
+              "from": "rate_limit.secondary_window.used_percent",
+              "unit": "percent",
+              "reset_from": "rate_limit.secondary_window.resets_at"
+            },
+            {
+              "id": "credits",
+              "label": "额外额度",
+              "from": "credits",
+              "unit": "string"
+            }
+          ]
+        },
+        {
+          "id": "reset_credits",
+          "label": "限额重置券",
+          "method": "GET",
+          "region": "default",
+          "path": "/backend-api/wham/rate-limit-reset-credits",
+          "values": [
+            {
+              "id": "available",
+              "label": "可用重置券",
+              "from": "available_count",
+              "unit": "count"
+            }
+          ],
+          "note": "字段名以实测为准（社区）。"
+        }
+      ],
+      "peak": {
+        "has_peak": false,
+        "schedule_known": true,
+        "note": "未找到峰谷规则：只有 5 小时/周窗口与重置券，无时段系数。"
+      }
+    },
+    {
+      "id": "commandcode",
+      "name": "CommandCode（Go / GOAT）",
+      "kind": "subscription",
+      "homepage": "https://commandcode.ai",
+      "sources": [
+        "https://commandcode.ai/docs/plans/goat",
+        "https://github.com/VicBilibily/GCMP（src/quota/providers/commandcode.ts）"
+      ],
+      "confidence": "community",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "subscription",
+        "coding-plan"
+      ],
+      "notes": [
+        "套餐额度数值有官方页面（GOAT：5 小时 $14、周 $35、月 $70），但额度查询接口未公开文档（社区逆向，多实现一致）。",
+        "planId 形如 individual-goat / individual-go / individual-pro / individual-max-*。"
+      ],
+      "auth": {
+        "type": "bearer",
+        "header": "Authorization",
+        "prefix": "Bearer ",
+        "key_hint": "CommandCode API Key（也可用会话 Cookie）"
+      },
+      "regions": [
+        {
+          "id": "default",
+          "label": "默认",
+          "base": "https://api.commandcode.ai"
+        }
+      ],
+      "queries": [
+        {
+          "id": "credits",
+          "label": "额度与窗口",
+          "method": "GET",
+          "region": "default",
+          "path": "/alpha/billing/credits",
+          "values": [
+            {
+              "id": "five_hour_used",
+              "label": "5 小时窗口已用",
+              "from": "windowLimits.fiveHour.used",
+              "unit": "money",
+              "reset_from": "windowLimits.fiveHour.resetAt"
+            },
+            {
+              "id": "five_hour_cap",
+              "label": "5 小时窗口上限",
+              "from": "windowLimits.fiveHour.cap",
+              "unit": "money"
+            },
+            {
+              "id": "weekly_used",
+              "label": "周窗口已用",
+              "from": "windowLimits.weekly.used",
+              "unit": "money",
+              "reset_from": "windowLimits.weekly.resetAt"
+            },
+            {
+              "id": "weekly_cap",
+              "label": "周窗口上限",
+              "from": "windowLimits.weekly.cap",
+              "unit": "money"
+            },
+            {
+              "id": "monthly_credits",
+              "label": "月度额度",
+              "from": "credits.monthlyCredits",
+              "unit": "money"
+            },
+            {
+              "id": "purchased",
+              "label": "已购额度",
+              "from": "credits.purchasedCredits",
+              "unit": "money"
+            },
+            {
+              "id": "free",
+              "label": "赠送额度",
+              "from": "credits.freeCredits",
+              "unit": "money"
+            }
+          ]
+        },
+        {
+          "id": "subscriptions",
+          "label": "套餐标识",
+          "method": "GET",
+          "region": "default",
+          "path": "/alpha/billing/subscriptions",
+          "values": [
+            {
+              "id": "plan",
+              "label": "套餐",
+              "from": "planId",
+              "unit": "string"
+            }
+          ],
+          "note": "用于把用户套餐映射到额度表；失败可忽略（soft-fail）。"
+        }
+      ],
+      "peak": {
+        "has_peak": false,
+        "schedule_known": true,
+        "note": "套餐层不分峰谷；DeepSeek 系模型透传上游峰谷价（周一至周五 01:00-04:00、06:00-10:00 UTC）。"
+      }
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "kind": "balance",
+      "homepage": "https://platform.deepseek.com",
+      "sources": [
+        "https://api-docs.deepseek.com/api/get-user-balance",
+        "https://api-docs.deepseek.com/quick_start/pricing"
+      ],
+      "confidence": "official",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "cn",
+        "balance",
+        "peak-pricing"
+      ],
+      "notes": [
+        "余额制，无套餐/窗口概念。",
+        "金额字段是字符串，且可能返回多条 balance_infos（CNY / USD 多币种），展示前按 currency 分组。"
+      ],
+      "auth": {
+        "type": "bearer",
+        "header": "Authorization",
+        "prefix": "Bearer ",
+        "key_hint": "sk-…"
+      },
+      "regions": [
+        {
+          "id": "default",
+          "label": "默认",
+          "base": "https://api.deepseek.com",
+          "note": "/user/balance 与 /v1/user/balance 等效"
+        }
+      ],
+      "queries": [
+        {
+          "id": "balance",
+          "label": "账户余额",
+          "method": "GET",
+          "region": "default",
+          "path": "/user/balance",
+          "legacy_paths": [
+            "/v1/user/balance"
+          ],
+          "values": [
+            {
+              "id": "is_available",
+              "label": "是否可继续调用",
+              "from": "is_available",
+              "unit": "bool"
+            },
+            {
+              "id": "total",
+              "label": "总余额",
+              "from": "balance_infos[0].total_balance",
+              "unit": "money",
+              "currency_from": "balance_infos[0].currency",
+              "note": "多币种时由客户端选择要展示的币种条目"
+            },
+            {
+              "id": "granted",
+              "label": "赠送余额（未过期）",
+              "from": "balance_infos[0].granted_balance",
+              "unit": "money"
+            },
+            {
+              "id": "topped_up",
+              "label": "充值余额",
+              "from": "balance_infos[0].topped_up_balance",
+              "unit": "money"
+            }
+          ]
+        }
+      ],
+      "peak": {
+        "has_peak": true,
+        "schedule_known": true,
+        "enabled": true,
+        "timezone": "Asia/Shanghai",
+        "windows": [
+          {
+            "days": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "start": "09:00",
+            "end": "12:00"
+          },
+          {
+            "days": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "start": "14:00",
+            "end": "18:00"
+          }
+        ],
+        "holiday_calendar": "cn",
+        "off_peak_discount": 0.5,
+        "applies_to": "api_pricing",
+        "note": "官方以 UTC 表述：周一至周五 01:00-04:00 与 06:00-10:00 UTC，等价于上表 UTC+8 区间。高峰价为平峰 2 倍；中国法定节假日全天按平峰（需 holiday_calendar=cn）。"
+      }
+    },
+    {
+      "id": "kimi",
+      "name": "Kimi（Kimi Code / 会员）",
+      "kind": "subscription",
+      "homepage": "https://www.kimi.com/coding",
+      "sources": [
+        "https://github.com/MoonshotAI/kimi-code（官方 CLI，packages/oauth/src/managed-usage.ts 定义响应结构）",
+        "https://platform.kimi.com/docs/guide/product-plans.md"
+      ],
+      "confidence": "semi-official",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "cn",
+        "subscription",
+        "coding-plan"
+      ],
+      "notes": [
+        "接口由官方 CLI 源码定义（属半官方），未列入公开 API 文档，可能随时变更。",
+        "国内站与海外站 API Key 互不通用，混用返回 401。",
+        "窗口随套餐代际不同：老会员有 5 小时 + 周（周日清零）；2026-09 起的新会员取周窗改为月额度，且与 Kimi 网页/Agent 共用额度池。"
+      ],
+      "auth": {
+        "type": "bearer",
+        "header": "Authorization",
+        "prefix": "Bearer ",
+        "key_hint": "Kimi Code Console 签发的 API Key"
+      },
+      "regions": [
+        {
+          "id": "cn",
+          "label": "国内",
+          "base": "https://api.kimi.com"
+        },
+        {
+          "id": "intl",
+          "label": "国际",
+          "base": "https://api.kimi.ai",
+          "note": "需另配国际站 Key"
+        }
+      ],
+      "queries": [
+        {
+          "id": "usages",
+          "label": "套餐用量",
+          "method": "GET",
+          "region": "cn",
+          "path": "/coding/v1/usages",
+          "values": [
+            {
+              "id": "limit_5h",
+              "label": "5 小时窗口",
+              "from": "limit_5h.used_ratio",
+              "unit": "percent",
+              "reset_from": "limit_5h.reset_time"
+            },
+            {
+              "id": "limit_7d",
+              "label": "周窗口（老会员）",
+              "from": "limit_7d.used_ratio",
+              "unit": "percent",
+              "reset_from": "limit_7d.reset_time"
+            },
+            {
+              "id": "limit_month",
+              "label": "月额度（2026-09 起新会员）",
+              "from": "limit_month_code.used_ratio",
+              "unit": "percent",
+              "reset_from": "limit_month_code.reset_time",
+              "note": "limit_month_total 为账户总额度，不用于进度展示"
+            },
+            {
+              "id": "booster",
+              "label": "加油包余额",
+              "from": "boosterWallet.balance",
+              "unit": "money"
+            },
+            {
+              "id": "parallel",
+              "label": "并发上限",
+              "from": "parallel.limit",
+              "unit": "count"
+            }
+          ],
+          "note": "旧版响应把窗口放在 usage / limits 下，客户端需保留兜底解析路径。"
+        }
+      ],
+      "peak": {
+        "has_peak": false,
+        "schedule_known": true,
+        "note": "官方文档与官方 CLI 源码均未出现峰谷时段规则（未找到证据），不做高峰展示。"
+      }
+    },
+    {
+      "id": "minimax",
+      "name": "MiniMax（M Plan / Token Plan）",
+      "kind": "subscription",
+      "homepage": "https://platform.minimaxi.com",
+      "sources": [
+        "https://platform.minimax.io/docs/m-plan/usage-rules",
+        "https://platform.minimax.io/docs/m-plan/faq",
+        "https://github.com/MiniMax-AI/cli（src/client/endpoints.ts，Key 类型分流）"
+      ],
+      "confidence": "official",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "cn",
+        "subscription",
+        "token-plan"
+      ],
+      "notes": [
+        "订阅 Key（sk-cp-…）走本接口查套餐；按量 Key（sk-api-…）应改查 /account/query_balance（不在本规则范围）。",
+        "5 小时窗口自首次使用起计时，与周窗口独立重置；视频模型只计周窗口。",
+        "官方 FAQ 的 current_interval_usage_count 语义是『剩余次数』而非已用次数。"
+      ],
+      "auth": {
+        "type": "bearer",
+        "header": "Authorization",
+        "prefix": "Bearer ",
+        "key_hint": "sk-cp-…"
+      },
+      "regions": [
+        {
+          "id": "cn",
+          "label": "国内",
+          "base": "https://www.minimaxi.com"
+        },
+        {
+          "id": "intl",
+          "label": "国际",
+          "base": "https://www.minimax.io"
+        }
+      ],
+      "queries": [
+        {
+          "id": "plan_remains",
+          "label": "套餐剩余",
+          "method": "GET",
+          "region": "cn",
+          "path": "/v1/token_plan/remains",
+          "legacy_paths": [
+            "/v1/api/openplatform/coding_plan/remains"
+          ],
+          "values": [
+            {
+              "id": "interval_5h",
+              "label": "5 小时窗口剩余",
+              "from": "model_remains[0].current_interval_remaining_percent",
+              "unit": "percent",
+              "reset_from": "model_remains[0].end_time",
+              "status_from": "model_remains[0].current_interval_status"
+            },
+            {
+              "id": "weekly",
+              "label": "周窗口剩余",
+              "from": "model_remains[0].current_weekly_remaining_percent",
+              "unit": "percent",
+              "reset_from": "model_remains[0].weekly_end_time",
+              "status_from": "model_remains[0].current_weekly_status"
+            }
+          ],
+          "note": "响应里 model_remains[] 按模型分组，客户端应让用户选择展示哪个模型；下标 0 只是默认示例。"
+        }
+      ],
+      "peak": {
+        "has_peak": true,
+        "schedule_known": false,
+        "note": "官方承认高峰期存在动态限流（可能临时拦截调用），但未公布时段，无法判定『当前是否高峰』；UI 只能提示『高峰期可能动态限流』。"
+      }
+    },
+    {
+      "id": "opencode-go",
+      "name": "OpenCode Go",
+      "kind": "subscription",
+      "homepage": "https://opencode.ai",
+      "sources": [
+        "https://opencode.ai/docs/go/",
+        "https://github.com/anomalyco/opencode（官方仓库合入了 console 的 go usage 端点，PR #16513）"
+      ],
+      "confidence": "official",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "subscription",
+        "coding-plan",
+        "peak-pricing"
+      ],
+      "notes": [
+        "额度单位是分模型美元月额度，模型之间不可挪用；5 小时窗口 = 月额度 20%、周 = 50%、月 = 100%，真正的瓶颈通常是 5 小时窗口。",
+        "无 Go 订阅时接口返回 403，Key 无效返回 401。",
+        "用满后可回退到 Console 余额（按量计费）。"
+      ],
+      "auth": {
+        "type": "bearer",
+        "header": "Authorization",
+        "prefix": "Bearer ",
+        "key_hint": "OpenCode API Key"
+      },
+      "regions": [
+        {
+          "id": "default",
+          "label": "默认",
+          "base": "https://opencode.ai"
+        }
+      ],
+      "queries": [
+        {
+          "id": "go_usage",
+          "label": "Go 套餐额度",
+          "method": "GET",
+          "region": "default",
+          "path": "/zen/go/v1/usage",
+          "values": [
+            {
+              "id": "rolling_5h",
+              "label": "5 小时窗口已用",
+              "from": "usage.rolling.percent",
+              "unit": "percent",
+              "reset_from": "usage.rolling.resetsAt",
+              "status_from": "usage.rolling.status"
+            },
+            {
+              "id": "weekly",
+              "label": "周窗口已用",
+              "from": "usage.weekly.percent",
+              "unit": "percent",
+              "reset_from": "usage.weekly.resetsAt",
+              "status_from": "usage.weekly.status"
+            },
+            {
+              "id": "monthly",
+              "label": "月窗口已用",
+              "from": "usage.monthly.percent",
+              "unit": "percent",
+              "reset_from": "usage.monthly.resetsAt",
+              "status_from": "usage.monthly.status"
+            }
+          ],
+          "note": "Console 登录态另有 /console/api/go/status（需 x-org-id）与 /console/api/billing/status，未公开文档，仅作排查参考。"
+        }
+      ],
+      "peak": {
+        "has_peak": false,
+        "schedule_known": true,
+        "note": "套餐层不分峰谷。仅当使用 DeepSeek 系模型时按上游峰谷价扣减美元额度（周一至周五 01:00-04:00、06:00-10:00 UTC）。"
+      }
+    },
+    {
+      "id": "zhipu-glm",
+      "name": "智谱 GLM Coding Plan（bigmodel / Z.ai）",
+      "kind": "subscription",
+      "homepage": "https://bigmodel.cn",
+      "sources": [
+        "https://docs.bigmodel.cn/cn/coding-plan/overview",
+        "https://docs.bigmodel.cn/cn/coding-plan/faq",
+        "https://docs.z.ai/devpack/overview"
+      ],
+      "confidence": "community",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "cn",
+        "subscription",
+        "coding-plan",
+        "peak-pricing"
+      ],
+      "notes": [
+        "额度规则与峰谷定义有官方文档，但额度查询接口未列入公开 API 文档（社区逆向，多项目一致）。",
+        "鉴权存疑：多数实现把 API Key 直传 Authorization（不加 Bearer），也有实现写 Bearer——接入前必须实测两版。",
+        "积分制：平峰（含周末全天）只按基础积分 50% 抵扣。"
+      ],
+      "auth": {
+        "type": "raw",
+        "header": "Authorization",
+        "key_hint": "GLM API Key（不带 Bearer，待实测）"
+      },
+      "regions": [
+        {
+          "id": "cn",
+          "label": "国内",
+          "base": "https://bigmodel.cn"
+        },
+        {
+          "id": "intl",
+          "label": "国际",
+          "base": "https://api.z.ai"
+        }
+      ],
+      "queries": [
+        {
+          "id": "quota_limit",
+          "label": "套餐额度",
+          "method": "GET",
+          "region": "cn",
+          "path": "/api/monitor/usage/quota/limit",
+          "values": [
+            {
+              "id": "window_5h",
+              "label": "5 小时积分窗口已用",
+              "from": "data.limits[0].percentage",
+              "unit": "percent",
+              "reset_from": "data.limits[0].nextResetTime"
+            },
+            {
+              "id": "window_week",
+              "label": "周积分窗口已用",
+              "from": "data.limits[1].percentage",
+              "unit": "percent",
+              "reset_from": "data.limits[1].nextResetTime"
+            },
+            {
+              "id": "mcp_month",
+              "label": "MCP 月度调用次数",
+              "from": "data.limits[2].percentage",
+              "unit": "percent",
+              "note": "TIME_LIMIT 类型，指 MCP 工具月度次数"
+            }
+          ],
+          "note": "limits[] 顺序不保证：按 unit 字段区分（3=5 小时、6=周；TOKENS_LIMIT / CREDIT_LIMIT / TIME_LIMIT 为类型）。下标仅为示例，客户端须按 unit 匹配。"
+        },
+        {
+          "id": "account_balance",
+          "label": "账户余额",
+          "method": "GET",
+          "region": "cn",
+          "path": "/api/biz/account/query-customer-account-report",
+          "values": [
+            {
+              "id": "balance",
+              "label": "账户余额",
+              "from": "data.balance",
+              "unit": "money"
+            }
+          ],
+          "note": "仅国内站实现过，国际站请按官网控制台口径处理。"
+        }
+      ],
+      "peak": {
+        "has_peak": true,
+        "schedule_known": true,
+        "enabled": true,
+        "timezone": "Asia/Shanghai",
+        "windows": [
+          {
+            "days": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "start": "14:00",
+            "end": "18:00"
+          }
+        ],
+        "off_peak_discount": 0.5,
+        "applies_to": "plan_quota",
+        "note": "国内 bigmodel 与国际 Z.ai 同为周一至周五 14:00-18:00（新加坡时间与北京时间同值 UTC+8）；周末全天平峰。"
+      }
+    }
+  ]
+}

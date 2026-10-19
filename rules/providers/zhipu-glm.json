@@ -1,0 +1,76 @@
+{
+  "id": "zhipu-glm",
+  "name": "智谱 GLM Coding Plan（bigmodel / Z.ai）",
+  "kind": "subscription",
+  "homepage": "https://bigmodel.cn",
+  "sources": [
+    "https://docs.bigmodel.cn/cn/coding-plan/overview",
+    "https://docs.bigmodel.cn/cn/coding-plan/faq",
+    "https://docs.z.ai/devpack/overview"
+  ],
+  "confidence": "community",
+  "verified_at": "2026-10-19",
+  "tags": ["cn", "subscription", "coding-plan", "peak-pricing"],
+  "notes": [
+    "额度规则与峰谷定义有官方文档，但额度查询接口未列入公开 API 文档（社区逆向，多项目一致）。",
+    "鉴权存疑：多数实现把 API Key 直传 Authorization（不加 Bearer），也有实现写 Bearer——接入前必须实测两版。",
+    "积分制：平峰（含周末全天）只按基础积分 50% 抵扣。"
+  ],
+  "auth": { "type": "raw", "header": "Authorization", "key_hint": "GLM API Key（不带 Bearer，待实测）" },
+  "regions": [
+    { "id": "cn", "label": "国内", "base": "https://bigmodel.cn" },
+    { "id": "intl", "label": "国际", "base": "https://api.z.ai" }
+  ],
+  "queries": [
+    {
+      "id": "quota_limit",
+      "label": "套餐额度",
+      "method": "GET",
+      "region": "cn",
+      "path": "/api/monitor/usage/quota/limit",
+      "values": [
+        {
+          "id": "window_5h",
+          "label": "5 小时积分窗口已用",
+          "from": "data.limits[0].percentage",
+          "unit": "percent",
+          "reset_from": "data.limits[0].nextResetTime"
+        },
+        {
+          "id": "window_week",
+          "label": "周积分窗口已用",
+          "from": "data.limits[1].percentage",
+          "unit": "percent",
+          "reset_from": "data.limits[1].nextResetTime"
+        },
+        {
+          "id": "mcp_month",
+          "label": "MCP 月度调用次数",
+          "from": "data.limits[2].percentage",
+          "unit": "percent",
+          "note": "TIME_LIMIT 类型，指 MCP 工具月度次数"
+        }
+      ],
+      "note": "limits[] 顺序不保证：按 unit 字段区分（3=5 小时、6=周；TOKENS_LIMIT / CREDIT_LIMIT / TIME_LIMIT 为类型）。下标仅为示例，客户端须按 unit 匹配。"
+    },
+    {
+      "id": "account_balance",
+      "label": "账户余额",
+      "method": "GET",
+      "region": "cn",
+      "path": "/api/biz/account/query-customer-account-report",
+      "values": [{ "id": "balance", "label": "账户余额", "from": "data.balance", "unit": "money" }],
+      "note": "仅国内站实现过，国际站请按官网控制台口径处理。"
+    }
+  ],
+  "peak": {
+    "has_peak": true,
+    "schedule_known": true,
+    "enabled": true,
+    "timezone": "Asia/Shanghai",
+    "windows": [{ "days": [1, 2, 3, 4, 5], "start": "14:00", "end": "18:00" }],
+    "off_peak_discount": 0.5,
+    "applies_to": "plan_quota",
+    "note": "国内 bigmodel 与国际 Z.ai 同为周一至周五 14:00-18:00（新加坡时间与北京时间同值 UTC+8）；周末全天平峰。"
+  }
+}

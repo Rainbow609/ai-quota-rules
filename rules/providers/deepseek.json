@@ -1,0 +1,58 @@
+{
+  "id": "deepseek",
+  "name": "DeepSeek",
+  "kind": "balance",
+  "homepage": "https://platform.deepseek.com",
+  "sources": [
+    "https://api-docs.deepseek.com/api/get-user-balance",
+    "https://api-docs.deepseek.com/quick_start/pricing"
+  ],
+  "confidence": "official",
+  "verified_at": "2026-10-19",
+  "tags": ["cn", "balance", "peak-pricing"],
+  "notes": [
+    "余额制，无套餐/窗口概念。",
+    "金额字段是字符串，且可能返回多条 balance_infos（CNY / USD 多币种），展示前按 currency 分组。"
+  ],
+  "auth": { "type": "bearer", "header": "Authorization", "prefix": "Bearer ", "key_hint": "sk-…" },
+  "regions": [
+    { "id": "default", "label": "默认", "base": "https://api.deepseek.com", "note": "/user/balance 与 /v1/user/balance 等效" }
+  ],
+  "queries": [
+    {
+      "id": "balance",
+      "label": "账户余额",
+      "method": "GET",
+      "region": "default",
+      "path": "/user/balance",
+      "legacy_paths": ["/v1/user/balance"],
+      "values": [
+        { "id": "is_available", "label": "是否可继续调用", "from": "is_available", "unit": "bool" },
+        {
+          "id": "total",
+          "label": "总余额",
+          "from": "balance_infos[0].total_balance",
+          "unit": "money",
+          "currency_from": "balance_infos[0].currency",
+          "note": "多币种时由客户端选择要展示的币种条目"
+        },
+        { "id": "granted", "label": "赠送余额（未过期）", "from": "balance_infos[0].granted_balance", "unit": "money" },
+        { "id": "topped_up", "label": "充值余额", "from": "balance_infos[0].topped_up_balance", "unit": "money" }
+      ]
+    }
+  ],
+  "peak": {
+    "has_peak": true,
+    "schedule_known": true,
+    "enabled": true,
+    "timezone": "Asia/Shanghai",
+    "windows": [
+      { "days": [1, 2, 3, 4, 5], "start": "09:00", "end": "12:00" },
+      { "days": [1, 2, 3, 4, 5], "start": "14:00", "end": "18:00" }
+    ],
+    "holiday_calendar": "cn",
+    "off_peak_discount": 0.5,
+    "applies_to": "api_pricing",
+    "note": "官方以 UTC 表述：周一至周五 01:00-04:00 与 06:00-10:00 UTC，等价于上表 UTC+8 区间。高峰价为平峰 2 倍；中国法定节假日全天按平峰（需 holiday_calendar=cn）。"
+  }
+}

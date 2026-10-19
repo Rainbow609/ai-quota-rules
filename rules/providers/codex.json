@@ -1,0 +1,64 @@
+{
+  "id": "codex",
+  "name": "Codex / ChatGPT 订阅",
+  "kind": "subscription",
+  "homepage": "https://chatgpt.com",
+  "sources": [
+    "https://github.com/openai/codex（官方 CLI 源码引用 {base}/wham/usage）",
+    "https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan"
+  ],
+  "confidence": "community",
+  "verified_at": "2026-10-19",
+  "tags": ["subscription", "oauth", "requires-web-login"],
+  "notes": [
+    "接口未公开文档，字段结构由官方开源仓库 openai/codex 的 backend-client 源码印证。",
+    "**需要 OAuth 登录**：客户端必须自行完成 PKCE 授权流程（内嵌 Web 或外部浏览器回跳），请求需附加 chatgpt-account-id 头（取自 OAuth 会话）。",
+    "桌面端凭据位于 ~/.codex/auth.json，可作为调试参照。"
+  ],
+  "auth": { "type": "oauth", "header": "Authorization", "prefix": "Bearer ", "key_hint": "ChatGPT OAuth access token" },
+  "regions": [
+    { "id": "default", "label": "默认", "base": "https://chatgpt.com" }
+  ],
+  "queries": [
+    {
+      "id": "wham_usage",
+      "label": "订阅额度窗口",
+      "method": "GET",
+      "region": "default",
+      "path": "/backend-api/wham/usage",
+      "values": [
+        { "id": "plan", "label": "套餐类型", "from": "plan_type", "unit": "string" },
+        {
+          "id": "primary",
+          "label": "主窗口（通常 5 小时）已用",
+          "from": "rate_limit.primary_window.used_percent",
+          "unit": "percent",
+          "reset_from": "rate_limit.primary_window.resets_at",
+          "note": "配套字段 limit_window_seconds / reset_after_seconds 用于判读窗口长度"
+        },
+        {
+          "id": "secondary",
+          "label": "次窗口（通常周）已用",
+          "from": "rate_limit.secondary_window.used_percent",
+          "unit": "percent",
+          "reset_from": "rate_limit.secondary_window.resets_at"
+        },
+        { "id": "credits", "label": "额外额度", "from": "credits", "unit": "string" }
+      ]
+    },
+    {
+      "id": "reset_credits",
+      "label": "限额重置券",
+      "method": "GET",
+      "region": "default",
+      "path": "/backend-api/wham/rate-limit-reset-credits",
+      "values": [{ "id": "available", "label": "可用重置券", "from": "available_count", "unit": "count" }],
+      "note": "字段名以实测为准（社区）。"
+    }
+  ],
+  "peak": {
+    "has_peak": false,
+    "schedule_known": true,
+    "note": "未找到峰谷规则：只有 5 小时/周窗口与重置券，无时段系数。"
+  }
+}

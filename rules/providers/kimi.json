@@ -1,0 +1,64 @@
+{
+  "id": "kimi",
+  "name": "Kimi（Kimi Code / 会员）",
+  "kind": "subscription",
+  "homepage": "https://www.kimi.com/coding",
+  "sources": [
+    "https://github.com/MoonshotAI/kimi-code（官方 CLI，packages/oauth/src/managed-usage.ts 定义响应结构）",
+    "https://platform.kimi.com/docs/guide/product-plans.md"
+  ],
+  "confidence": "semi-official",
+  "verified_at": "2026-10-19",
+  "tags": ["cn", "subscription", "coding-plan"],
+  "notes": [
+    "接口由官方 CLI 源码定义（属半官方），未列入公开 API 文档，可能随时变更。",
+    "国内站与海外站 API Key 互不通用，混用返回 401。",
+    "窗口随套餐代际不同：老会员有 5 小时 + 周（周日清零）；2026-09 起的新会员取周窗改为月额度，且与 Kimi 网页/Agent 共用额度池。"
+  ],
+  "auth": { "type": "bearer", "header": "Authorization", "prefix": "Bearer ", "key_hint": "Kimi Code Console 签发的 API Key" },
+  "regions": [
+    { "id": "cn", "label": "国内", "base": "https://api.kimi.com" },
+    { "id": "intl", "label": "国际", "base": "https://api.kimi.ai", "note": "需另配国际站 Key" }
+  ],
+  "queries": [
+    {
+      "id": "usages",
+      "label": "套餐用量",
+      "method": "GET",
+      "region": "cn",
+      "path": "/coding/v1/usages",
+      "values": [
+        {
+          "id": "limit_5h",
+          "label": "5 小时窗口",
+          "from": "limit_5h.used_ratio",
+          "unit": "percent",
+          "reset_from": "limit_5h.reset_time"
+        },
+        {
+          "id": "limit_7d",
+          "label": "周窗口（老会员）",
+          "from": "limit_7d.used_ratio",
+          "unit": "percent",
+          "reset_from": "limit_7d.reset_time"
+        },
+        {
+          "id": "limit_month",
+          "label": "月额度（2026-09 起新会员）",
+          "from": "limit_month_code.used_ratio",
+          "unit": "percent",
+          "reset_from": "limit_month_code.reset_time",
+          "note": "limit_month_total 为账户总额度，不用于进度展示"
+        },
+        { "id": "booster", "label": "加油包余额", "from": "boosterWallet.balance", "unit": "money" },
+        { "id": "parallel", "label": "并发上限", "from": "parallel.limit", "unit": "count" }
+      ],
+      "note": "旧版响应把窗口放在 usage / limits 下，客户端需保留兜底解析路径。"
+    }
+  ],
+  "peak": {
+    "has_peak": false,
+    "schedule_known": true,
+    "note": "官方文档与官方 CLI 源码均未出现峰谷时段规则（未找到证据），不做高峰展示。"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "minimax",
+  "name": "MiniMax（M Plan / Token Plan）",
+  "kind": "subscription",
+  "homepage": "https://platform.minimaxi.com",
+  "sources": [
+    "https://platform.minimax.io/docs/m-plan/usage-rules",
+    "https://platform.minimax.io/docs/m-plan/faq",
+    "https://github.com/MiniMax-AI/cli（src/client/endpoints.ts，Key 类型分流）"
+  ],
+  "confidence": "official",
+  "verified_at": "2026-10-19",
+  "tags": ["cn", "subscription", "token-plan"],
+  "notes": [
+    "订阅 Key（sk-cp-…）走本接口查套餐；按量 Key（sk-api-…）应改查 /account/query_balance（不在本规则范围）。",
+    "5 小时窗口自首次使用起计时，与周窗口独立重置；视频模型只计周窗口。",
+    "官方 FAQ 的 current_interval_usage_count 语义是『剩余次数』而非已用次数。"
+  ],
+  "auth": { "type": "bearer", "header": "Authorization", "prefix": "Bearer ", "key_hint": "sk-cp-…" },
+  "regions": [
+    { "id": "cn", "label": "国内", "base": "https://www.minimaxi.com" },
+    { "id": "intl", "label": "国际", "base": "https://www.minimax.io" }
+  ],
+  "queries": [
+    {
+      "id": "plan_remains",
+      "label": "套餐剩余",
+      "method": "GET",
+      "region": "cn",
+      "path": "/v1/token_plan/remains",
+      "legacy_paths": ["/v1/api/openplatform/coding_plan/remains"],
+      "values": [
+        {
+          "id": "interval_5h",
+          "label": "5 小时窗口剩余",
+          "from": "model_remains[0].current_interval_remaining_percent",
+          "unit": "percent",
+          "reset_from": "model_remains[0].end_time",
+          "status_from": "model_remains[0].current_interval_status"
+        },
+        {
+          "id": "weekly",
+          "label": "周窗口剩余",
+          "from": "model_remains[0].current_weekly_remaining_percent",
+          "unit": "percent",
+          "reset_from": "model_remains[0].weekly_end_time",
+          "status_from": "model_remains[0].current_weekly_status"
+        }
+      ],
+      "note": "响应里 model_remains[] 按模型分组，客户端应让用户选择展示哪个模型；下标 0 只是默认示例。"
+    }
+  ],
+  "peak": {
+    "has_peak": true,
+    "schedule_known": false,
+    "note": "官方承认高峰期存在动态限流（可能临时拦截调用），但未公布时段，无法判定『当前是否高峰』；UI 只能提示『高峰期可能动态限流』。"
+  }
+}

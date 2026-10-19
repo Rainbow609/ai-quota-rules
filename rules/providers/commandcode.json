@@ -1,0 +1,75 @@
+{
+  "id": "commandcode",
+  "name": "CommandCode（Go / GOAT）",
+  "kind": "subscription",
+  "homepage": "https://commandcode.ai",
+  "sources": [
+    "https://commandcode.ai/docs/plans/goat",
+    "https://github.com/VicBilibily/GCMP（src/quota/providers/commandcode.ts）"
+  ],
+  "confidence": "community",
+  "verified_at": "2026-10-19",
+  "tags": ["subscription", "coding-plan"],
+  "notes": [
+    "套餐额度数值有官方页面（GOAT：5 小时 $14、周 $35、月 $70），但额度查询接口未公开文档（社区逆向，多实现一致）。",
+    "planId 形如 individual-goat / individual-go / individual-pro / individual-max-*。"
+  ],
+  "auth": { "type": "bearer", "header": "Authorization", "prefix": "Bearer ", "key_hint": "CommandCode API Key（也可用会话 Cookie）" },
+  "regions": [
+    { "id": "default", "label": "默认", "base": "https://api.commandcode.ai" }
+  ],
+  "queries": [
+    {
+      "id": "credits",
+      "label": "额度与窗口",
+      "method": "GET",
+      "region": "default",
+      "path": "/alpha/billing/credits",
+      "values": [
+        {
+          "id": "five_hour_used",
+          "label": "5 小时窗口已用",
+          "from": "windowLimits.fiveHour.used",
+          "unit": "money",
+          "reset_from": "windowLimits.fiveHour.resetAt"
+        },
+        {
+          "id": "five_hour_cap",
+          "label": "5 小时窗口上限",
+          "from": "windowLimits.fiveHour.cap",
+          "unit": "money"
+        },
+        {
+          "id": "weekly_used",
+          "label": "周窗口已用",
+          "from": "windowLimits.weekly.used",
+          "unit": "money",
+          "reset_from": "windowLimits.weekly.resetAt"
+        },
+        {
+          "id": "weekly_cap",
+          "label": "周窗口上限",
+          "from": "windowLimits.weekly.cap",
+          "unit": "money"
+        },
+        { "id": "monthly_credits", "label": "月度额度", "from": "credits.monthlyCredits", "unit": "money" },
+        { "id": "purchased", "label": "已购额度", "from": "credits.purchasedCredits", "unit": "money" },
+        { "id": "free", "label": "赠送额度", "from": "credits.freeCredits", "unit": "money" }
+      ]
+    },
+    {
+      "id": "subscriptions",
+      "label": "套餐标识",
+      "method": "GET",
+      "region": "default",
+      "path": "/alpha/billing/subscriptions",
+      "values": [{ "id": "plan", "label": "套餐", "from": "planId", "unit": "string" }],
+      "note": "用于把用户套餐映射到额度表；失败可忽略（soft-fail）。"
+    }
+  ],
+  "peak": {
+    "has_peak": false,
+    "schedule_known": true,
+    "note": "套餐层不分峰谷；DeepSeek 系模型透传上游峰谷价（周一至周五 01:00-04:00、06:00-10:00 UTC）。"
+  }
+}

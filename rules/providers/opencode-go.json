@@ -1,0 +1,63 @@
+{
+  "id": "opencode-go",
+  "name": "OpenCode Go",
+  "kind": "subscription",
+  "homepage": "https://opencode.ai",
+  "sources": [
+    "https://opencode.ai/docs/go/",
+    "https://github.com/anomalyco/opencode（官方仓库合入了 console 的 go usage 端点，PR #16513）"
+  ],
+  "confidence": "official",
+  "verified_at": "2026-10-19",
+  "tags": ["subscription", "coding-plan", "peak-pricing"],
+  "notes": [
+    "额度单位是分模型美元月额度，模型之间不可挪用；5 小时窗口 = 月额度 20%、周 = 50%、月 = 100%，真正的瓶颈通常是 5 小时窗口。",
+    "无 Go 订阅时接口返回 403，Key 无效返回 401。",
+    "用满后可回退到 Console 余额（按量计费）。"
+  ],
+  "auth": { "type": "bearer", "header": "Authorization", "prefix": "Bearer ", "key_hint": "OpenCode API Key" },
+  "regions": [
+    { "id": "default", "label": "默认", "base": "https://opencode.ai" }
+  ],
+  "queries": [
+    {
+      "id": "go_usage",
+      "label": "Go 套餐额度",
+      "method": "GET",
+      "region": "default",
+      "path": "/zen/go/v1/usage",
+      "values": [
+        {
+          "id": "rolling_5h",
+          "label": "5 小时窗口已用",
+          "from": "usage.rolling.percent",
+          "unit": "percent",
+          "reset_from": "usage.rolling.resetsAt",
+          "status_from": "usage.rolling.status"
+        },
+        {
+          "id": "weekly",
+          "label": "周窗口已用",
+          "from": "usage.weekly.percent",
+          "unit": "percent",
+          "reset_from": "usage.weekly.resetsAt",
+          "status_from": "usage.weekly.status"
+        },
+        {
+          "id": "monthly",
+          "label": "月窗口已用",
+          "from": "usage.monthly.percent",
+          "unit": "percent",
+          "reset_from": "usage.monthly.resetsAt",
+          "status_from": "usage.monthly.status"
+        }
+      ],
+      "note": "Console 登录态另有 /console/api/go/status（需 x-org-id）与 /console/api/billing/status，未公开文档，仅作排查参考。"
+    }
+  ],
+  "peak": {
+    "has_peak": false,
+    "schedule_known": true,
+    "note": "套餐层不分峰谷。仅当使用 DeepSeek 系模型时按上游峰谷价扣减美元额度（周一至周五 01:00-04:00、06:00-10:00 UTC）。"
+  }
+}
