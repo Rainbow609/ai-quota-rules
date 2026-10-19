@@ -43,7 +43,7 @@ Claude Code 的历史高峰规则保留但 `enabled=false`（官方 2026-05-06 �
 | 优先级 | 源 | 说明 |
 | --- | --- | --- |
 | 1 | Gitee raw（需自建镜像仓库） | 免备案、大陆直连最稳；同步需手动或定期；**有被下架先例，不能作唯一源** |
-| 2 | npmmirror（`registry.npmmirror.com/<pkg>/<ver>/files/<path>`） | 免备案、大陆直连稳；需先发 npm 包；无 ETag，用 `@version` 寻址 |
+| — | npmmirror | **不采用**（2026-10-19 决策）：不发 npm 包，免备案通道只用 Gitee 镜像 |
 | 3 | jsDelivr 四主机轮换（`cdn` / `fastly` / `testingcf` / `gcore`.jsdelivr.net） | 可用但不稳；分支缓存 12 小时；**限流时返回 HTTP 200 + 正文 `429: Too Many Requests`，必须按"正文非 JSON"判失败** |
 | 4 | ghproxy 池（gh-proxy.com / ghfast.top / ghproxy.net …） | 境外反代，只能兜底；节点会漂移，清单放 `mirrors.json` 远程更新，勿硬编码进 App |
 | 5 | raw.githubusercontent.com | 大陆不可依赖；仅海外/开发期 |

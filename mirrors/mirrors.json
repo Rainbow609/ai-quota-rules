@@ -27,7 +27,7 @@
       "kind": "npm-files",
       "url_template": "https://registry.npmmirror.com/ai-quota-rules/{npm_version}/files/{path}",
       "cn_reachable": "likely",
-      "note": "需先 npm publish（CI 里已留可选步骤）。免备案、大陆直连稳；注意 files 路径不返回 ETag，只能用 URL 中的版本号寻址。npm_version 需每次发版同步更新（可用 manifest 里的 npm 字段下发）。"
+      "note": "按 2026-10-19 决策【不采用】：不发 npm 包，免备案通道只用 Gitee 镜像。若日后启用，先 npm publish 并把 npm_version 写死在此（files 路径不返回 ETag，只能靠 URL 里的版本号寻址）。"
     },
     {
       "id": "jsdelivr",
