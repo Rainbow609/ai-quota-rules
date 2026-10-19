@@ -99,8 +99,8 @@
         "label": { "type": "string" },
         "from": {
           "type": "string",
-          "pattern": "^[A-Za-z_][A-Za-z0-9_]*(\\[[0-9]+\\])?(\\.[A-Za-z_][A-Za-z0-9_]*(\\[[0-9]+\\])?)*$",
-          "description": "受限路径：点号分隔 + [n] 下标；不支持通配、表达式或函数"
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*(\\[[0-9]*\\]|\\[\\*\\])?(\\.[A-Za-z_][A-Za-z0-9_]*(\\[[0-9]*\\]|\\[\\*\\])?)*$",
+          "description": "受限路径：点号分隔 + 下标。`[n]` 固定下标、`[]` 逐项展开、`[*]` 求和（与 GCMP 的用法一致）；不支持正则、表达式或函数"
         },
         "unit": { "type": "string", "enum": ["money", "percent", "count", "seconds", "string", "bool", "timestamp"] },
         "currency_from": { "type": "string" },
@@ -121,6 +121,7 @@
         "timezone": { "type": "string" },
         "windows": {
           "type": "array",
+          "description": "本地时间窗口，右开区间 [start, end)；days：1=周一 … 7=周日。GCMP 用 cron 表达同一语义时按『小时区间含端点』（`* 9-11` ≡ [09:00,12:00)），两者等价 —— 见 README『峰谷边界』",
           "items": {
             "type": "object",
             "required": ["days", "start", "end"],

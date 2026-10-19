@@ -1,0 +1,2595 @@
+{
+  "source": "https://gcmp.dev/configs/index.json",
+  "license": "GCMP 为 MIT（Copyright (c) 2025 VicBilibily）；本文件仅记录其公开发布的事实性定义",
+  "fetched_at": "2026-10-19T07:29:04Z",
+  "schema_version": 1,
+  "gcmp_version": "0.29.0",
+  "providers": {
+    "antling": {
+      "content_hash": "7f38a593815a",
+      "model_count": 6,
+      "base_url": "https://api.ant-ling.com/anthropic",
+      "models": [
+        {
+          "id": "Ling-3.0-flash",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "Ling-3.0-flash-VL",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "Ling-3.0-tiny",
+          "max_input_tokens": 224000,
+          "has_pricing": false,
+          "tiers": []
+        },
+        {
+          "id": "Ling-2.6-1T",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "Ling-2.6-flash",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "Ring-2.6-1T",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "baidu": {
+      "content_hash": "e701d80c2234",
+      "model_count": 30,
+      "base_url": "https://qianfan.baidubce.com/v2",
+      "models": [
+        {
+          "id": "glm-5.3-token",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-flash-token",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.2-token",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.1-token",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-pro-token",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-pro-0813-token",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-flash-token",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash-0731-token",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "kimi-k2.6-token",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-pro-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-pro-0813-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-flash-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash-0731-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "glm-5.3-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-flash-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.2-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.1-token-enterprise",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5-token-enterprise",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.6-token-enterprise",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash-0731",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-pro-0813",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "glm-5",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.1",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.2",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.6",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ernie-5.0",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ernie-5.1",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "clinepass": {
+      "content_hash": "f911f87862c1",
+      "model_count": 14,
+      "base_url": "https://api.cline.bot/api/v1",
+      "models": [
+        {
+          "id": "cline-pass/glm-5.3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "cline-pass/glm-5.3-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "cline-pass/kimi-k3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "cline-pass/deepseek-v4-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * 1-5",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "cline-pass/deepseek-v4.1-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * 1-5",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "cline-pass/mimo-v2.6-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "cline-pass/mimo-v2.6-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "cline-pass/mimo-v2.5",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "cline-pass/mimo-v2.5-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "cline-pass/minimax-m3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "cline-pass/muse-spark-1.3-contributor",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "cline-pass/qwen3.8-max",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "cline-pass/qwen3.7-max",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "cline-pass/qwen3.7-plus",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "codex": {
+      "content_hash": "8641c416e42c",
+      "model_count": 10,
+      "base_url": "https://chatgpt.com/backend-api/codex",
+      "models": [
+        {
+          "id": "gpt-5.4",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-5.4-mini",
+          "max_input_tokens": 272000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-5.5",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-5.6-sol",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-5.6-terra",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-5.6-luna",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-6-astra",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-6-sol",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-6-luna",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-6.1-sol",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "commandcode": {
+      "content_hash": "2037ba9c393d",
+      "model_count": 55,
+      "base_url": "https://api.commandcode.ai/provider/v1",
+      "models": [
+        {
+          "id": "deepseek-v4.1-flash-fast",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-12,14-18 * * 1-5",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4.1-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-12,14-18 * * 1-5",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-12,14-18 * * 1-5",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-flash-fast",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash-vision-exp",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-12,14-18 * * 1-5",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-12,14-18 * * 1-5",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "gemini-3.7-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gemini-3.8-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.1",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.2",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.2-fast",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-flashx",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-5.6-luna",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-5.6-sol",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-6-luna",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "grok-4.5",
+          "max_input_tokens": 436000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "grok-4.6",
+          "max_input_tokens": 436000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "grok-4.7",
+          "max_input_tokens": 436000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "inkling",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "inkling-small",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.5",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.6",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.7-code",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.7-code-highspeed",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.6-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.6-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.6-pro-ultraspeed",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.5",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.5-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "minimax-m3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "muse-spark-1.2",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "muse-spark-1.2-contributor",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "muse-spark-1.3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "muse-spark-1.3-contributor",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "muse-spark-open",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "muse-wonder-1.0",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "nemotron-3-ultra",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "nemotron-3.5-super-vl",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen-3.8-27b",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen-3.8-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen-3.8-max",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen-3.8-max-0902",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen-3.8-max-prime",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "step-3.5-flash",
+          "max_input_tokens": 192000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "step-3.7-flash",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "tencent-hy3",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "tencent-hy4-preview",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "longcat-2.0",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "step-5-preview",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mistral-large-4",
+          "max_input_tokens": 448000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "laguna-s-2.1-free",
+          "max_input_tokens": 224000,
+          "has_pricing": false,
+          "tiers": []
+        }
+      ]
+    },
+    "dashscope": {
+      "content_hash": "b6dce7deef02",
+      "model_count": 55,
+      "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+      "models": [
+        {
+          "id": "qwen3.7-plus-coding-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.6-plus-coding-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.5-coding-plan",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5-coding-plan",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.8-max-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.8-flash-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.7-max-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.7-plus-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.6-plus-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.6-flash-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-pro-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-pro-0813-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4.1-flash-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-flash-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash-0731-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v3.2-token-plan",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.7-code-token-plan",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.6-token-plan",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.5-token-plan",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.2-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.1-token-plan",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5-token-plan",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "auto-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": false,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.8-max-token-plan-personal",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.8-flash-token-plan-personal",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.7-max-token-plan-personal",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.7-plus-token-plan-personal",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.6-flash-token-plan-personal",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-token-plan-personal",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.2-token-plan-personal",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-pro-token-plan-personal",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-pro-0813-token-plan-personal",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4.1-flash-token-plan-personal",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-flash-0731-token-plan-personal",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "auto-token-plan-personal",
+          "max_input_tokens": 936000,
+          "has_pricing": false,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.8-max",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.8-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.7-plus",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.7-max",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.7-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.6-plus",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.6-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.5-plus",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.5-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash-0731",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-pro-0813",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4.1-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 8-21 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "glm-5.2",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.7-code",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi/kimi-k3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "MiniMax/MiniMax-M3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "deepseek": {
+      "content_hash": "b0b03b925cb4",
+      "model_count": 2,
+      "base_url": "https://api.deepseek.com/v1",
+      "models": [
+        {
+          "id": "deepseek-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * 1-5",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * 1-5",
+              "timezone": null
+            }
+          ]
+        }
+      ]
+    },
+    "grok": {
+      "content_hash": "7c0d1bab1d15",
+      "model_count": 3,
+      "base_url": "https://api.x.ai/v1",
+      "models": [
+        {
+          "id": "grok-4.7",
+          "max_input_tokens": 436000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "grok-4.6",
+          "max_input_tokens": 436000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "grok-4.5",
+          "max_input_tokens": 436000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "hyper": {
+      "content_hash": "d65867138dd9",
+      "model_count": 21,
+      "base_url": "https://hyper.charm.land/v1",
+      "models": [
+        {
+          "id": "deepseek-v4.1-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash-0731",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-pro-0813",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gemma-4-26b-a4b-it",
+          "max_input_tokens": 236000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.2",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-oss-120b",
+          "max_input_tokens": 118000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "inkling",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.7-code",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2-thinking",
+          "max_input_tokens": 236000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "minimax-m2.7",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "minimax-m3",
+          "max_input_tokens": 448000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.7-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.7-max",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.7-plus",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.8-2.4t-a95b",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.8-27b",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.8-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.8-max",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "longcat": {
+      "content_hash": "34bd50a33475",
+      "model_count": 2,
+      "base_url": "https://api.longcat.chat/anthropic",
+      "models": [
+        {
+          "id": "LongCat-2.5-Preview",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "LongCat-2.0",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "minimax": {
+      "content_hash": "d47da336741f",
+      "model_count": 7,
+      "base_url": "https://api.minimaxi.com/v1",
+      "models": [
+        {
+          "id": "MiniMax-M3.1-Flash-Preview-Token-Plan",
+          "max_input_tokens": 936000,
+          "has_pricing": false,
+          "tiers": []
+        },
+        {
+          "id": "MiniMax-M3-Token-Plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "MiniMax-M2.7-Token-Plan",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "MiniMax-M2.7-HighSpeed-Token-Plan",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "MiniMax-M3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "MiniMax-M2.7",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "MiniMax-M2.7-HighSpeed",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "moonshot": {
+      "content_hash": "6e1ef372910b",
+      "model_count": 8,
+      "base_url": "https://api.moonshot.cn/v1",
+      "models": [
+        {
+          "id": "kfc-k3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kfc-k3-256k",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-for-coding",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-for-coding-highspeed",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.6",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.7-code",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.7-code-highspeed",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "opencode": {
+      "content_hash": "6d6acd81e6bf",
+      "model_count": 30,
+      "base_url": "https://opencode.ai/inference/openai/v1",
+      "models": [
+        {
+          "id": "grok-4.7-go",
+          "max_input_tokens": 436000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "grok-4.6-go",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-flash-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.2-go",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-5.6-luna-go",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k3-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.7-code-go",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.6-go",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "longcat-2.0-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.6-pro-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.6-flash-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.5-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.5-pro-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "minimax-m3-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "minimax-m2.7-go",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "muse-spark-1.3-contributor-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "muse-spark-1.2-contributor-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.8-max-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.8-flash-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.7-max-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "qwen3.7-plus-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4.1-flash-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * 1-5",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-pro-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * 1-5",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "hy4-preview-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "hy3-go",
+          "max_input_tokens": 192000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gpt-6-luna-go",
+          "max_input_tokens": 872000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "claude-haiku-5-5-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "gemini-4-argon-contributor-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "step-5-preview-go",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "stepfun": {
+      "content_hash": "fccd7ee83588",
+      "model_count": 9,
+      "base_url": "https://api.stepfun.com",
+      "models": [
+        {
+          "id": "step-5-preview-billing",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "step-3.7-flash-billing",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "step-3.5-flash-billing",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "step-3.5-flash-2603-billing",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "step-5-preview-step-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "step-3.7-flash-step-plan",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "step-3.5-flash-step-plan",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "step-3.5-flash-2603-step-plan",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "step-router-v1",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "tencent": {
+      "content_hash": "07402884eedb",
+      "model_count": 35,
+      "base_url": "https://api.hunyuan.cloud.tencent.com/v1",
+      "models": [
+        {
+          "id": "hy3-token-plan",
+          "max_input_tokens": 192000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "hy4-preview-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash-202605-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-pro-202606-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "glm-5-token-plan",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "minimax-m2.7-token-plan",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.1-token-plan",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.2-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "hy4-preview-tokenhub",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "hy3-tokenhub",
+          "max_input_tokens": 192000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-tokenhub",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5v-turbo-tokenhub",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5-turbo-tokenhub",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash-tokenhub",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-pro-tokenhub",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "kimi-k3-tokenhub",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.7-code-tokenhub",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.7-code-highspeed-tokenhub",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.6-tokenhub",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "minimax-m3-tokenhub",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "minimax-m2.7-tokenhub",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.2-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5-token-enterprise",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.1-token-enterprise",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5-turbo-token-enterprise",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.7-code-token-enterprise",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.7-code-highspeed-token-enterprise",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "kimi-k2.6-token-enterprise",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "minimax-m2.7-token-enterprise",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "minimax-m3-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-pro-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-flash-202605-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * *",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "deepseek-v4-pro-202606-token-enterprise",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * *",
+              "timezone": null
+            }
+          ]
+        }
+      ]
+    },
+    "volcengine": {
+      "content_hash": "3ebffcd91240",
+      "model_count": 39,
+      "base_url": "https://ark.cn-beijing.volces.com/api/v3",
+      "models": [
+        {
+          "id": "ark-code-doubao-seed-evolving",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-code-doubao-seed-2.1-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-code-doubao-seed-2.1-turbo",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-code-doubao-seed-2.0-lite",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-code-MiniMax-M3",
+          "max_input_tokens": 448000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-code-glm-5.3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-code-glm-5.3-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-code-deepseek-v4-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-code-deepseek-v4-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-code-deepseek-v4.1-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * 1-5",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "ark-code-kimi-k2.7-code",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-code-kimi-k2.8-preview",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-code-kimi-k3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-plan-doubao-seed-2.0-mini",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-plan-doubao-seed-2.0-lite",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-plan-doubao-seed-2.1-turbo",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-plan-doubao-seed-evolving",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-plan-minimax-m3",
+          "max_input_tokens": 448000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-plan-glm-5.3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-plan-glm-5.3-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-plan-kimi-k2.7-code",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-plan-kimi-k2.8-preview",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-plan-kimi-k3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-plan-deepseek-v4.1-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * 1-5",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "ark-plan-deepseek-v4-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "ark-plan-deepseek-v4-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "doubao-seed-evolving",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "doubao-seed-2-1-turbo",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "doubao-seed-2-1-pro",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "doubao-seed-2-0-code",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "doubao-seed-2-0-mini",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "doubao-seed-2-0-lite",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "doubao-seed-2-0-pro",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-flash-ga",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4-pro-ga",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "deepseek-v4.1-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": [
+            {
+              "cron": "* 9-11,14-17 * * 1-5",
+              "timezone": null
+            }
+          ]
+        },
+        {
+          "id": "glm-5.2",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "xfyun": {
+      "content_hash": "6e980ea96732",
+      "model_count": 33,
+      "base_url": "https://maas-coding-api.cn-huabei-1.xf-yun.com/v2",
+      "models": [
+        {
+          "id": "code-xsparkx2agent",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xsparkx2",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xsparkx2flash",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xopdeepseekv4pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xopdeepseekv4flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xopdeepseekv32",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xopglm52",
+          "max_input_tokens": 436000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xopglm51",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xopglm5",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xopglmv47flash",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xopkimik26",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xopkimik25",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xminimaxm25",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xopqwen36v35b",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xopqwen35v35b",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xopqwen35397b",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "code-xop3qwencodernext",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-spark-x2.5",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xsparkx2flash",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xopdeepseekv4pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xopdeepseekv4flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xopdeepseekv32",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xopglm52",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xopglm51",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xopglm5",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xopglmv47flash",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xopkimik26",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xopkimik25",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xminimaxm25",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xopqwen36v35b",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xopqwen35v35b",
+          "max_input_tokens": 112000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xopqwen35397b",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "token-xop3qwencodernext",
+          "max_input_tokens": 224000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "xiaomimimo": {
+      "content_hash": "563e6ea69ce6",
+      "model_count": 9,
+      "base_url": "https://api.xiaomimimo.com/v1",
+      "models": [
+        {
+          "id": "mimo-v2.6-pro-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.6-flash-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.6-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.6-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.6-pro-ultraspeed",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.5-pro-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.5-token-plan",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.5-pro",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "mimo-v2.5",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        }
+      ]
+    },
+    "zhipu": {
+      "content_hash": "556e9768ac02",
+      "model_count": 10,
+      "base_url": "https://open.bigmodel.cn/api/paas/v4",
+      "models": [
+        {
+          "id": "glm-5.3",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-flash",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-flashx",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-billing",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-flash-billing",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-5.3-flashx-billing",
+          "max_input_tokens": 936000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-4.7-billing",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-4.7-flash",
+          "max_input_tokens": 168000,
+          "has_pricing": false,
+          "tiers": []
+        },
+        {
+          "id": "glm-4.7-flashx",
+          "max_input_tokens": 168000,
+          "has_pricing": true,
+          "tiers": []
+        },
+        {
+          "id": "glm-4.6v-flash",
+          "max_input_tokens": 112000,
+          "has_pricing": false,
+          "tiers": []
+        }
+      ]
+    }
+  }
+}

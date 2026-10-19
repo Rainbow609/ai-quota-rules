@@ -1,0 +1,43 @@
+{
+  "id": "siliconflow",
+  "name": "硅基流动 SiliconFlow",
+  "kind": "balance",
+  "homepage": "https://siliconflow.cn",
+  "sources": [
+    "https://docs.siliconflow.com/en/api-reference/userinfo/get-user-info"
+  ],
+  "confidence": "official",
+  "verified_at": "2026-10-19",
+  "tags": ["cn", "balance"],
+  "notes": [
+    "三个余额字段语义不同：balance 为赠送余额、chargeBalance 为充值余额、totalBalance 为合计——UI 展示 totalBalance。",
+    "金额均为字符串。",
+    "name / image / email 字段自 2025-06-11 起置空，不再返回，不要依赖。"
+  ],
+  "auth": { "type": "bearer", "header": "Authorization", "prefix": "Bearer ", "key_hint": "sk-…" },
+  "regions": [
+    { "id": "cn", "label": "国内", "base": "https://api.siliconflow.cn" },
+    { "id": "intl", "label": "国际", "base": "https://api.siliconflow.com", "note": "需另配国际站 Key" }
+  ],
+  "queries": [
+    {
+      "id": "user_info",
+      "label": "账户余额",
+      "method": "GET",
+      "region": "cn",
+      "path": "/v1/user/info",
+      "values": [
+        { "id": "total", "label": "总余额", "from": "data.totalBalance", "unit": "money" },
+        { "id": "charge", "label": "充值余额", "from": "data.chargeBalance", "unit": "money" },
+        { "id": "gift", "label": "赠送余额", "from": "data.balance", "unit": "money" },
+        { "id": "status", "label": "账户状态", "from": "data.status", "unit": "string" }
+      ],
+      "note": "外层有 code / message / status 包装（code=20000 表示成功）。"
+    }
+  ],
+  "peak": {
+    "has_peak": false,
+    "schedule_known": true,
+    "note": "未找到峰谷时段规则。"
+  }
+}

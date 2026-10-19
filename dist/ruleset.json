@@ -1,7 +1,7 @@
 {
+  "ruleset_version": "2026.10.19.4",
+  "generated_at": "2026-10-19T07:29:56Z",
   "schema_version": "1",
-  "ruleset_version": "2026.10.19.2",
-  "generated_at": "2026-10-19T07:06:22Z",
   "min_client_version": "0.1.0",
   "holidays": {
     "cn": {
@@ -158,6 +158,98 @@
         ],
         "applies_to": "plan_quota",
         "note": "历史规则（2026-03-23 生效）：周一至周五 05:00-11:00 PT 为高峰，5 小时窗口消耗更快；官方已于 2026-05-06 取消高峰降额并翻倍 5 小时限额，故 enabled=false，保留供历史回放。"
+      }
+    },
+    {
+      "id": "clinepass",
+      "name": "ClinePass",
+      "kind": "subscription",
+      "homepage": "https://cline.bot",
+      "sources": [
+        "https://github.com/VicBilibily/GCMP/blob/main/src/quota/providers/clinepass.ts",
+        "https://github.com/steipete/CodexBar/blob/main/docs/clinepass.md"
+      ],
+      "confidence": "community",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "subscription",
+        "coding-plan",
+        "peak-pricing"
+      ],
+      "notes": [
+        "官方文档只在控制台展示用量，未公开该端点；≥4 个独立实现（GCMP / CodexBar / OmniRoute / oh-my-pi）字段一致。",
+        "API Key 即可查询，无需内嵌浏览器；另有 Cline CLI 的 WorkOS OAuth 会话可作替代凭据。",
+        "limit 类型以 type 字段区分，不要按下标取。"
+      ],
+      "auth": {
+        "type": "bearer",
+        "header": "Authorization",
+        "prefix": "Bearer ",
+        "key_hint": "Cline / ClinePass API Key"
+      },
+      "regions": [
+        {
+          "id": "default",
+          "label": "默认",
+          "base": "https://api.cline.bot"
+        }
+      ],
+      "queries": [
+        {
+          "id": "usage_limits",
+          "label": "套餐限频",
+          "method": "GET",
+          "region": "default",
+          "path": "/api/v1/users/me/plan/usage-limits",
+          "values": [
+            {
+              "id": "success",
+              "label": "业务成功标志",
+              "from": "success",
+              "unit": "bool"
+            },
+            {
+              "id": "five_hour",
+              "label": "5 小时窗口已用",
+              "from": "data.limits[].percentUsed",
+              "unit": "percent",
+              "reset_from": "data.limits[].resetsAt",
+              "note": "按同一元素的 type 字段筛选（five_hour / weekly / monthly）；`[]` 表示逐项展开"
+            }
+          ],
+          "note": "成功判据为 success=true（不是 HTTP 状态码）。"
+        }
+      ],
+      "peak": {
+        "has_peak": true,
+        "schedule_known": true,
+        "timezone": "Asia/Shanghai",
+        "windows": [
+          {
+            "days": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "start": "09:00",
+            "end": "12:00"
+          },
+          {
+            "days": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "start": "14:00",
+            "end": "18:00"
+          }
+        ],
+        "applies_to": "api_pricing",
+        "note": "来源为 GCMP 的 tokenPricing.tiers cron（`* 9-11,14-17 * * 1-5`，分钟粒度右开区间，等价于上表），**官方未公布时段**，存疑。"
       }
     },
     {
@@ -473,6 +565,108 @@
       }
     },
     {
+      "id": "grok",
+      "name": "Grok（Grok Build / SuperGrok 订阅）",
+      "kind": "subscription",
+      "homepage": "https://grok.com",
+      "sources": [
+        "https://github.com/VicBilibily/GCMP/blob/main/src/quota/grokQuota.ts",
+        "https://github.com/VicBilibily/GCMP/blob/main/src/quota/parsers/grokUsageParser.ts",
+        "https://github.com/VicBilibily/GCMP/blob/main/src/cli/auth/grokCliAuth.ts"
+      ],
+      "confidence": "community",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "subscription",
+        "oauth",
+        "requires-web-login"
+      ],
+      "notes": [
+        "**需要 Grok CLI 的 OAuth 登录态**（`~/.grok/auth.json`；refresh 走 `https://auth.x.ai/oauth2/token`）——客户端要么内嵌浏览器走 OAuth，要么导入本地 CLI 会话。",
+        "响应是 protobuf 风格的省略 0 值结构，解析必须容忍字段缺失。",
+        "与 xAI 官方 Management API（`management-api.x.ai`，团队预付费余额）是两套东西，不可混用。"
+      ],
+      "auth": {
+        "type": "oauth",
+        "header": "Authorization",
+        "prefix": "Bearer ",
+        "key_hint": "Grok CLI OAuth access token",
+        "extra_headers": {
+          "X-XAI-Token-Auth": "xai-grok-cli"
+        }
+      },
+      "regions": [
+        {
+          "id": "default",
+          "label": "默认",
+          "base": "https://cli-chat-proxy.grok.com"
+        }
+      ],
+      "queries": [
+        {
+          "id": "credits_weekly",
+          "label": "周额度",
+          "method": "GET",
+          "region": "default",
+          "path": "/v1/billing?format=credits",
+          "values": [
+            {
+              "id": "used_percent",
+              "label": "已用百分比",
+              "from": "config.creditUsagePercent",
+              "unit": "percent"
+            },
+            {
+              "id": "period_end",
+              "label": "本周期结束",
+              "from": "currentPeriod.end",
+              "unit": "timestamp"
+            },
+            {
+              "id": "tier",
+              "label": "订阅档位",
+              "from": "subscriptionTier",
+              "unit": "string"
+            }
+          ],
+          "note": "首选形态；不可用时回退到下方 billing 查询（月额度口径）。"
+        },
+        {
+          "id": "billing_monthly",
+          "label": "月额度（回退）",
+          "method": "GET",
+          "region": "default",
+          "path": "/v1/billing",
+          "values": [
+            {
+              "id": "monthly_limit",
+              "label": "月度上限",
+              "from": "config.monthlyLimit.val",
+              "unit": "money"
+            },
+            {
+              "id": "used",
+              "label": "已用",
+              "from": "config.used.val",
+              "unit": "money"
+            },
+            {
+              "id": "period_end",
+              "label": "本周期结束",
+              "from": "billingPeriodEnd",
+              "unit": "timestamp"
+            }
+          ],
+          "note": "仅在 credits 形态不可用时使用；两套口径不要同时展示。"
+        }
+      ],
+      "peak": {
+        "has_peak": false,
+        "schedule_known": true,
+        "note": "未找到订阅层的峰谷规则（GCMP 仅为 Grok 配了上下文阶梯，无峰谷 cron）。"
+      }
+    },
+    {
       "id": "kimi",
       "name": "Kimi（Kimi Code / 会员）",
       "kind": "subscription",
@@ -642,6 +836,83 @@
       }
     },
     {
+      "id": "moonshot",
+      "name": "Moonshot 开放平台（按量余额）",
+      "kind": "balance",
+      "homepage": "https://platform.moonshot.cn",
+      "sources": [
+        "https://platform.kimi.com/docs/api/balance",
+        "https://github.com/VicBilibily/GCMP/blob/main/src/quota/providers/moonshot.ts"
+      ],
+      "confidence": "official",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "cn",
+        "balance"
+      ],
+      "notes": [
+        "这是**开放平台按量余额**，与 `kimi`（Kimi Code 编程套餐窗口）是不同产品、不同 Key、不同域名，切勿合并展示。",
+        "国内站与国际站 Key 不通用（platform.moonshot.cn / platform.kimi.ai），混用 401。",
+        "现金余额可为负（欠费）；available_balance ≤ 0 时推理会返回 exceeded_current_quota_error。"
+      ],
+      "auth": {
+        "type": "bearer",
+        "header": "Authorization",
+        "prefix": "Bearer ",
+        "key_hint": "Moonshot API Key (sk-…)"
+      },
+      "regions": [
+        {
+          "id": "cn",
+          "label": "国内",
+          "base": "https://api.moonshot.cn"
+        },
+        {
+          "id": "intl",
+          "label": "国际",
+          "base": "https://api.moonshot.ai",
+          "note": "需另配国际站 Key"
+        }
+      ],
+      "queries": [
+        {
+          "id": "balance",
+          "label": "账户余额",
+          "method": "GET",
+          "region": "cn",
+          "path": "/v1/users/me/balance",
+          "values": [
+            {
+              "id": "available",
+              "label": "可用余额",
+              "from": "data.available_balance",
+              "unit": "money",
+              "note": "现金 + 代金券"
+            },
+            {
+              "id": "cash",
+              "label": "现金余额",
+              "from": "data.cash_balance",
+              "unit": "money",
+              "note": "可为负（欠费）"
+            },
+            {
+              "id": "voucher",
+              "label": "代金券余额",
+              "from": "data.voucher_balance",
+              "unit": "money"
+            }
+          ],
+          "note": "业务码在 code 字段（0 = 成功），不是 HTTP 状态码。"
+        }
+      ],
+      "peak": {
+        "has_peak": false,
+        "schedule_known": true,
+        "note": "官方文档未给出峰谷时段；余额制，无窗口。"
+      }
+    },
+    {
       "id": "opencode-go",
       "name": "OpenCode Go",
       "kind": "subscription",
@@ -715,6 +986,279 @@
         "has_peak": false,
         "schedule_known": true,
         "note": "套餐层不分峰谷。仅当使用 DeepSeek 系模型时按上游峰谷价扣减美元额度（周一至周五 01:00-04:00、06:00-10:00 UTC）。"
+      }
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "kind": "balance",
+      "homepage": "https://openrouter.ai",
+      "sources": [
+        "https://openrouter.ai/docs/api-reference/limits",
+        "https://openrouter.ai/docs/api-reference/get-credits"
+      ],
+      "confidence": "official",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "aggregator",
+        "balance"
+      ],
+      "notes": [
+        "两种口径：单个 Key 的额度上限/剩余（任意 Key 可查）与账户总额（**必须 Management Key**）。",
+        "普通 Key 调 /credits 会得到 403，报错原文 “Only management keys can perform this operation”。",
+        "429 时可直接读响应头 X-RateLimit-Limit / Remaining / Reset。"
+      ],
+      "auth": {
+        "type": "bearer",
+        "header": "Authorization",
+        "prefix": "Bearer ",
+        "key_hint": "sk-or-…"
+      },
+      "regions": [
+        {
+          "id": "default",
+          "label": "默认",
+          "base": "https://openrouter.ai"
+        }
+      ],
+      "queries": [
+        {
+          "id": "key",
+          "label": "Key 额度",
+          "method": "GET",
+          "region": "default",
+          "path": "/api/v1/key",
+          "values": [
+            {
+              "id": "limit",
+              "label": "Key 上限",
+              "from": "data.limit",
+              "unit": "money",
+              "note": "可为 null（未设限）"
+            },
+            {
+              "id": "remaining",
+              "label": "Key 剩余",
+              "from": "data.limit_remaining",
+              "unit": "money"
+            },
+            {
+              "id": "usage",
+              "label": "Key 累计用量",
+              "from": "data.usage",
+              "unit": "money"
+            },
+            {
+              "id": "usage_daily",
+              "label": "今日用量",
+              "from": "data.usage_daily",
+              "unit": "money"
+            },
+            {
+              "id": "usage_weekly",
+              "label": "本周用量",
+              "from": "data.usage_weekly",
+              "unit": "money"
+            },
+            {
+              "id": "usage_monthly",
+              "label": "本月用量",
+              "from": "data.usage_monthly",
+              "unit": "money"
+            },
+            {
+              "id": "is_free_tier",
+              "label": "是否免费档",
+              "from": "data.is_free_tier",
+              "unit": "bool"
+            }
+          ]
+        },
+        {
+          "id": "credits",
+          "label": "账户总额（需 Management Key）",
+          "method": "GET",
+          "region": "default",
+          "path": "/api/v1/credits",
+          "values": [
+            {
+              "id": "total_credits",
+              "label": "累计购买额度",
+              "from": "data.total_credits",
+              "unit": "money"
+            },
+            {
+              "id": "total_usage",
+              "label": "累计消耗",
+              "from": "data.total_usage",
+              "unit": "money"
+            }
+          ],
+          "note": "剩余 = total_credits − total_usage；普通 Key 返回 403，客户端应把该查询标为可选能力。"
+        }
+      ],
+      "peak": {
+        "has_peak": false,
+        "schedule_known": true,
+        "note": "未找到峰谷时段规则。"
+      }
+    },
+    {
+      "id": "siliconflow",
+      "name": "硅基流动 SiliconFlow",
+      "kind": "balance",
+      "homepage": "https://siliconflow.cn",
+      "sources": [
+        "https://docs.siliconflow.com/en/api-reference/userinfo/get-user-info"
+      ],
+      "confidence": "official",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "cn",
+        "balance"
+      ],
+      "notes": [
+        "三个余额字段语义不同：balance 为赠送余额、chargeBalance 为充值余额、totalBalance 为合计——UI 展示 totalBalance。",
+        "金额均为字符串。",
+        "name / image / email 字段自 2025-06-11 起置空，不再返回，不要依赖。"
+      ],
+      "auth": {
+        "type": "bearer",
+        "header": "Authorization",
+        "prefix": "Bearer ",
+        "key_hint": "sk-…"
+      },
+      "regions": [
+        {
+          "id": "cn",
+          "label": "国内",
+          "base": "https://api.siliconflow.cn"
+        },
+        {
+          "id": "intl",
+          "label": "国际",
+          "base": "https://api.siliconflow.com",
+          "note": "需另配国际站 Key"
+        }
+      ],
+      "queries": [
+        {
+          "id": "user_info",
+          "label": "账户余额",
+          "method": "GET",
+          "region": "cn",
+          "path": "/v1/user/info",
+          "values": [
+            {
+              "id": "total",
+              "label": "总余额",
+              "from": "data.totalBalance",
+              "unit": "money"
+            },
+            {
+              "id": "charge",
+              "label": "充值余额",
+              "from": "data.chargeBalance",
+              "unit": "money"
+            },
+            {
+              "id": "gift",
+              "label": "赠送余额",
+              "from": "data.balance",
+              "unit": "money"
+            },
+            {
+              "id": "status",
+              "label": "账户状态",
+              "from": "data.status",
+              "unit": "string"
+            }
+          ],
+          "note": "外层有 code / message / status 包装（code=20000 表示成功）。"
+        }
+      ],
+      "peak": {
+        "has_peak": false,
+        "schedule_known": true,
+        "note": "未找到峰谷时段规则。"
+      }
+    },
+    {
+      "id": "stepfun",
+      "name": "阶跃星辰 StepFun",
+      "kind": "balance",
+      "homepage": "https://platform.stepfun.com",
+      "sources": [
+        "https://platform.stepfun.com/docs/zh/api-reference/accounts"
+      ],
+      "confidence": "official",
+      "verified_at": "2026-10-19",
+      "tags": [
+        "cn",
+        "balance"
+      ],
+      "notes": [
+        "官方文档《查询账户信息》给出该接口；字段来自文档，未经本机实测。",
+        "余额制，无套餐窗口。"
+      ],
+      "auth": {
+        "type": "bearer",
+        "header": "Authorization",
+        "prefix": "Bearer ",
+        "key_hint": "StepFun API Key"
+      },
+      "regions": [
+        {
+          "id": "cn",
+          "label": "国内",
+          "base": "https://api.stepfun.com"
+        },
+        {
+          "id": "intl",
+          "label": "国际",
+          "base": "https://api.stepfun.ai",
+          "note": "国际站以 USD 计价"
+        }
+      ],
+      "queries": [
+        {
+          "id": "accounts",
+          "label": "账户余额",
+          "method": "GET",
+          "region": "cn",
+          "path": "/v1/accounts",
+          "values": [
+            {
+              "id": "type",
+              "label": "账户类型",
+              "from": "type",
+              "unit": "string"
+            },
+            {
+              "id": "balance",
+              "label": "余额",
+              "from": "balance",
+              "unit": "money"
+            },
+            {
+              "id": "cash",
+              "label": "现金余额",
+              "from": "total_cash_balance",
+              "unit": "money"
+            },
+            {
+              "id": "voucher",
+              "label": "代金券余额",
+              "from": "total_voucher_balance",
+              "unit": "money"
+            }
+          ]
+        }
+      ],
+      "peak": {
+        "has_peak": false,
+        "schedule_known": true,
+        "note": "未找到官方峰谷/时段规则。"
       }
     },
     {

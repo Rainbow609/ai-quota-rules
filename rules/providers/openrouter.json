@@ -1,0 +1,57 @@
+{
+  "id": "openrouter",
+  "name": "OpenRouter",
+  "kind": "balance",
+  "homepage": "https://openrouter.ai",
+  "sources": [
+    "https://openrouter.ai/docs/api-reference/limits",
+    "https://openrouter.ai/docs/api-reference/get-credits"
+  ],
+  "confidence": "official",
+  "verified_at": "2026-10-19",
+  "tags": ["aggregator", "balance"],
+  "notes": [
+    "两种口径：单个 Key 的额度上限/剩余（任意 Key 可查）与账户总额（**必须 Management Key**）。",
+    "普通 Key 调 /credits 会得到 403，报错原文 “Only management keys can perform this operation”。",
+    "429 时可直接读响应头 X-RateLimit-Limit / Remaining / Reset。"
+  ],
+  "auth": { "type": "bearer", "header": "Authorization", "prefix": "Bearer ", "key_hint": "sk-or-…" },
+  "regions": [
+    { "id": "default", "label": "默认", "base": "https://openrouter.ai" }
+  ],
+  "queries": [
+    {
+      "id": "key",
+      "label": "Key 额度",
+      "method": "GET",
+      "region": "default",
+      "path": "/api/v1/key",
+      "values": [
+        { "id": "limit", "label": "Key 上限", "from": "data.limit", "unit": "money", "note": "可为 null（未设限）" },
+        { "id": "remaining", "label": "Key 剩余", "from": "data.limit_remaining", "unit": "money" },
+        { "id": "usage", "label": "Key 累计用量", "from": "data.usage", "unit": "money" },
+        { "id": "usage_daily", "label": "今日用量", "from": "data.usage_daily", "unit": "money" },
+        { "id": "usage_weekly", "label": "本周用量", "from": "data.usage_weekly", "unit": "money" },
+        { "id": "usage_monthly", "label": "本月用量", "from": "data.usage_monthly", "unit": "money" },
+        { "id": "is_free_tier", "label": "是否免费档", "from": "data.is_free_tier", "unit": "bool" }
+      ]
+    },
+    {
+      "id": "credits",
+      "label": "账户总额（需 Management Key）",
+      "method": "GET",
+      "region": "default",
+      "path": "/api/v1/credits",
+      "values": [
+        { "id": "total_credits", "label": "累计购买额度", "from": "data.total_credits", "unit": "money" },
+        { "id": "total_usage", "label": "累计消耗", "from": "data.total_usage", "unit": "money" }
+      ],
+      "note": "剩余 = total_credits − total_usage；普通 Key 返回 403，客户端应把该查询标为可选能力。"
+    }
+  ],
+  "peak": {
+    "has_peak": false,
+    "schedule_known": true,
+    "note": "未找到峰谷时段规则。"
+  }
+}

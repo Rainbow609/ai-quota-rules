@@ -1,0 +1,43 @@
+{
+  "id": "moonshot",
+  "name": "Moonshot 开放平台（按量余额）",
+  "kind": "balance",
+  "homepage": "https://platform.moonshot.cn",
+  "sources": [
+    "https://platform.kimi.com/docs/api/balance",
+    "https://github.com/VicBilibily/GCMP/blob/main/src/quota/providers/moonshot.ts"
+  ],
+  "confidence": "official",
+  "verified_at": "2026-10-19",
+  "tags": ["cn", "balance"],
+  "notes": [
+    "这是**开放平台按量余额**，与 `kimi`（Kimi Code 编程套餐窗口）是不同产品、不同 Key、不同域名，切勿合并展示。",
+    "国内站与国际站 Key 不通用（platform.moonshot.cn / platform.kimi.ai），混用 401。",
+    "现金余额可为负（欠费）；available_balance ≤ 0 时推理会返回 exceeded_current_quota_error。"
+  ],
+  "auth": { "type": "bearer", "header": "Authorization", "prefix": "Bearer ", "key_hint": "Moonshot API Key (sk-…)" },
+  "regions": [
+    { "id": "cn", "label": "国内", "base": "https://api.moonshot.cn" },
+    { "id": "intl", "label": "国际", "base": "https://api.moonshot.ai", "note": "需另配国际站 Key" }
+  ],
+  "queries": [
+    {
+      "id": "balance",
+      "label": "账户余额",
+      "method": "GET",
+      "region": "cn",
+      "path": "/v1/users/me/balance",
+      "values": [
+        { "id": "available", "label": "可用余额", "from": "data.available_balance", "unit": "money", "note": "现金 + 代金券" },
+        { "id": "cash", "label": "现金余额", "from": "data.cash_balance", "unit": "money", "note": "可为负（欠费）" },
+        { "id": "voucher", "label": "代金券余额", "from": "data.voucher_balance", "unit": "money" }
+      ],
+      "note": "业务码在 code 字段（0 = 成功），不是 HTTP 状态码。"
+    }
+  ],
+  "peak": {
+    "has_peak": false,
+    "schedule_known": true,
+    "note": "官方文档未给出峰谷时段；余额制，无窗口。"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "id": "grok",
+  "name": "Grok（Grok Build / SuperGrok 订阅）",
+  "kind": "subscription",
+  "homepage": "https://grok.com",
+  "sources": [
+    "https://github.com/VicBilibily/GCMP/blob/main/src/quota/grokQuota.ts",
+    "https://github.com/VicBilibily/GCMP/blob/main/src/quota/parsers/grokUsageParser.ts",
+    "https://github.com/VicBilibily/GCMP/blob/main/src/cli/auth/grokCliAuth.ts"
+  ],
+  "confidence": "community",
+  "verified_at": "2026-10-19",
+  "tags": ["subscription", "oauth", "requires-web-login"],
+  "notes": [
+    "**需要 Grok CLI 的 OAuth 登录态**（`~/.grok/auth.json`；refresh 走 `https://auth.x.ai/oauth2/token`）——客户端要么内嵌浏览器走 OAuth，要么导入本地 CLI 会话。",
+    "响应是 protobuf 风格的省略 0 值结构，解析必须容忍字段缺失。",
+    "与 xAI 官方 Management API（`management-api.x.ai`，团队预付费余额）是两套东西，不可混用。"
+  ],
+  "auth": {
+    "type": "oauth",
+    "header": "Authorization",
+    "prefix": "Bearer ",
+    "key_hint": "Grok CLI OAuth access token",
+    "extra_headers": { "X-XAI-Token-Auth": "xai-grok-cli" }
+  },
+  "regions": [
+    { "id": "default", "label": "默认", "base": "https://cli-chat-proxy.grok.com" }
+  ],
+  "queries": [
+    {
+      "id": "credits_weekly",
+      "label": "周额度",
+      "method": "GET",
+      "region": "default",
+      "path": "/v1/billing?format=credits",
+      "values": [
+        { "id": "used_percent", "label": "已用百分比", "from": "config.creditUsagePercent", "unit": "percent" },
+        { "id": "period_end", "label": "本周期结束", "from": "currentPeriod.end", "unit": "timestamp" },
+        { "id": "tier", "label": "订阅档位", "from": "subscriptionTier", "unit": "string" }
+      ],
+      "note": "首选形态；不可用时回退到下方 billing 查询（月额度口径）。"
+    },
+    {
+      "id": "billing_monthly",
+      "label": "月额度（回退）",
+      "method": "GET",
+      "region": "default",
+      "path": "/v1/billing",
+      "values": [
+        { "id": "monthly_limit", "label": "月度上限", "from": "config.monthlyLimit.val", "unit": "money" },
+        { "id": "used", "label": "已用", "from": "config.used.val", "unit": "money" },
+        { "id": "period_end", "label": "本周期结束", "from": "billingPeriodEnd", "unit": "timestamp" }
+      ],
+      "note": "仅在 credits 形态不可用时使用；两套口径不要同时展示。"
+    }
+  ],
+  "peak": {
+    "has_peak": false,
+    "schedule_known": true,
+    "note": "未找到订阅层的峰谷规则（GCMP 仅为 Grok 配了上下文阶梯，无峰谷 cron）。"
+  }
+}

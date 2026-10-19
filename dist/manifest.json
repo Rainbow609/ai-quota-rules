@@ -1,25 +1,32 @@
 {
   "schema_version": "1",
-  "version": "2026.10.19.2",
-  "generated_at": "2026-10-19T07:06:22Z",
+  "version": "2026.10.19.4",
+  "generated_at": "2026-10-19T07:29:56Z",
   "min_client_version": "0.1.0",
+  "content_hash": "46e057f28e8773d7c27341da6c4739f6858c7c5c58f1f1daeb6663ad50322446",
   "checksum": {
     "algorithm": "sha256",
-    "sha256": "cca8f5921bae4e9e52e5e89cc0b7750c290090554a527a246ccd305638a8c3c6"
+    "sha256": "e10320968177a75ab176e997d4ba972d18a19d99c31d4eb37e2dc368a4df48ef"
   },
-  "size": 26821,
+  "size": 43220,
   "paths": {
     "ruleset": "dist/ruleset.json",
     "mirrors": "mirrors/mirrors.json"
   },
   "provider_ids": [
     "claude",
+    "clinepass",
     "codex",
     "commandcode",
     "deepseek",
+    "grok",
     "kimi",
     "minimax",
+    "moonshot",
     "opencode-go",
+    "openrouter",
+    "siliconflow",
+    "stepfun",
     "zhipu-glm"
   ]
 }

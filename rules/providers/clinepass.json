@@ -1,0 +1,54 @@
+{
+  "id": "clinepass",
+  "name": "ClinePass",
+  "kind": "subscription",
+  "homepage": "https://cline.bot",
+  "sources": [
+    "https://github.com/VicBilibily/GCMP/blob/main/src/quota/providers/clinepass.ts",
+    "https://github.com/steipete/CodexBar/blob/main/docs/clinepass.md"
+  ],
+  "confidence": "community",
+  "verified_at": "2026-10-19",
+  "tags": ["subscription", "coding-plan", "peak-pricing"],
+  "notes": [
+    "官方文档只在控制台展示用量，未公开该端点；≥4 个独立实现（GCMP / CodexBar / OmniRoute / oh-my-pi）字段一致。",
+    "API Key 即可查询，无需内嵌浏览器；另有 Cline CLI 的 WorkOS OAuth 会话可作替代凭据。",
+    "limit 类型以 type 字段区分，不要按下标取。"
+  ],
+  "auth": { "type": "bearer", "header": "Authorization", "prefix": "Bearer ", "key_hint": "Cline / ClinePass API Key" },
+  "regions": [
+    { "id": "default", "label": "默认", "base": "https://api.cline.bot" }
+  ],
+  "queries": [
+    {
+      "id": "usage_limits",
+      "label": "套餐限频",
+      "method": "GET",
+      "region": "default",
+      "path": "/api/v1/users/me/plan/usage-limits",
+      "values": [
+        { "id": "success", "label": "业务成功标志", "from": "success", "unit": "bool" },
+        {
+          "id": "five_hour",
+          "label": "5 小时窗口已用",
+          "from": "data.limits[].percentUsed",
+          "unit": "percent",
+          "reset_from": "data.limits[].resetsAt",
+          "note": "按同一元素的 type 字段筛选（five_hour / weekly / monthly）；`[]` 表示逐项展开"
+        }
+      ],
+      "note": "成功判据为 success=true（不是 HTTP 状态码）。"
+    }
+  ],
+  "peak": {
+    "has_peak": true,
+    "schedule_known": true,
+    "timezone": "Asia/Shanghai",
+    "windows": [
+      { "days": [1, 2, 3, 4, 5], "start": "09:00", "end": "12:00" },
+      { "days": [1, 2, 3, 4, 5], "start": "14:00", "end": "18:00" }
+    ],
+    "applies_to": "api_pricing",
+    "note": "来源为 GCMP 的 tokenPricing.tiers cron（`* 9-11,14-17 * * 1-5`，分钟粒度右开区间，等价于上表），**官方未公布时段**，存疑。"
+  }
+}

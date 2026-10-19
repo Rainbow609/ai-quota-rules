@@ -1,0 +1,41 @@
+{
+  "id": "stepfun",
+  "name": "阶跃星辰 StepFun",
+  "kind": "balance",
+  "homepage": "https://platform.stepfun.com",
+  "sources": [
+    "https://platform.stepfun.com/docs/zh/api-reference/accounts"
+  ],
+  "confidence": "official",
+  "verified_at": "2026-10-19",
+  "tags": ["cn", "balance"],
+  "notes": [
+    "官方文档《查询账户信息》给出该接口；字段来自文档，未经本机实测。",
+    "余额制，无套餐窗口。"
+  ],
+  "auth": { "type": "bearer", "header": "Authorization", "prefix": "Bearer ", "key_hint": "StepFun API Key" },
+  "regions": [
+    { "id": "cn", "label": "国内", "base": "https://api.stepfun.com" },
+    { "id": "intl", "label": "国际", "base": "https://api.stepfun.ai", "note": "国际站以 USD 计价" }
+  ],
+  "queries": [
+    {
+      "id": "accounts",
+      "label": "账户余额",
+      "method": "GET",
+      "region": "cn",
+      "path": "/v1/accounts",
+      "values": [
+        { "id": "type", "label": "账户类型", "from": "type", "unit": "string" },
+        { "id": "balance", "label": "余额", "from": "balance", "unit": "money" },
+        { "id": "cash", "label": "现金余额", "from": "total_cash_balance", "unit": "money" },
+        { "id": "voucher", "label": "代金券余额", "from": "total_voucher_balance", "unit": "money" }
+      ]
+    }
+  ],
+  "peak": {
+    "has_peak": false,
+    "schedule_known": true,
+    "note": "未找到官方峰谷/时段规则。"
+  }
+}

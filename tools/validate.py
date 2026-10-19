@@ -13,7 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RULES = os.path.join(ROOT, "rules")
 
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
-PATH_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*(\[[0-9]+\])?(\.[A-Za-z_][A-Za-z0-9_]*(\[[0-9]+\])?)*$")
+PATH_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*(\[[0-9]*\]|\[\*\])?(\.[A-Za-z_][A-Za-z0-9_]*(\[[0-9]*\]|\[\*\])?)*$")
 TIME_RE = re.compile(r"^[0-2][0-9]:[0-5][0-9]$")
 DATE_RE = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$")
 
