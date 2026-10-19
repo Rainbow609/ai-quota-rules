@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "ruleset_version": "2026.10.19.1",
-  "generated_at": "2026-10-19T07:06:00Z",
+  "ruleset_version": "2026.10.19.2",
+  "generated_at": "2026-10-19T07:06:22Z",
   "min_client_version": "0.1.0",
   "holidays": {
     "cn": {
